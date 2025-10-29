@@ -37,8 +37,8 @@ ln -sf "$(pwd)/kitty" ~/.config/kitty
 ln -sf "$(pwd)/picom" ~/.config/picom
 rm -rf ~/.doom.d
 ln -sf "$(pwd)/doom" ~/.doom.d
-~/.emacs.d/bin/doom sync
 git -C ~/.emacs.d fetch origin && git -C ~/.emacs.d reset --hard origin/master
+~/.emacs.d/bin/doom sync
 
 echo "> Enabling tlp power management service..."
 sudo systemctl enable tlp.service
