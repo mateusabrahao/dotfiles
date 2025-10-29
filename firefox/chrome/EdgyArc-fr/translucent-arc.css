@@ -1,0 +1,29 @@
+#sidebar-box {
+  background-color: transparent !important;
+}
+
+:root {
+  --af-minimal-opacity: 1;
+  @media (-moz-pref("af.edgyarc.macos-translucent") or -moz-pref("widget.windows.mica")) {
+    --af-minimal-opacity: 0.53;
+  }
+  @media (-moz-pref("af.edgyarc.macos-more-translucent")) {
+    --af-minimal-opacity: 0.45;
+  }
+}
+
+#navigator-toolbox,
+#browser {
+  background-color: color-mix(
+    in srgb,
+    var(--browser-frame-bgcolor),
+    transparent calc((1 - var(--af-minimal-opacity)) * 100%)
+  ) !important;
+  background-image: none !important;
+}
+
+/* Fixes transparent toolbar in fullscreen on macos */
+/* Only apply solid background when toolbox moves over the content */
+:root[inFullscreen] #navigator-toolbox[style*="transform"] {
+  background-color: var(--browser-frame-bgcolor) !important;
+}

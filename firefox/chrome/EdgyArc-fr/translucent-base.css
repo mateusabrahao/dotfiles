@@ -1,0 +1,24 @@
+@media (-moz-pref("af.edgyarc.macos-translucent")) {
+  :root {
+    appearance: -moz-window-titlebar !important;
+  }
+
+  /*add translucency to library window WIP*/
+  #placesList,
+  #placeContent {
+    background-color: transparent !important;
+    appearance: -moz-window-titlebar !important;
+  }
+
+  #placesContentTitle,
+  #placesContentTags,
+  #placesContentUrl,
+  #placesContentDate,
+  #placesContentVisitCount,
+  #placesContentDateAdded,
+  #placesContentLastModified,
+  #downloadsListBox {
+    background-color: transparent !important;
+  }
+}
+/*end translucent stuff*/

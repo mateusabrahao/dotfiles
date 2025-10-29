@@ -1,0 +1,13 @@
+@media (-moz-pref("uc.tweak.af.greyscale-webext-icons")) {
+  /* Greyscale extension buttons */
+  #navigator-toolbox:not(:hover) .toolbarbutton-1 {
+    filter: grayscale(100%);
+    transition: filter 300ms ease !important;
+  }
+
+  /* Restore color on hover */
+  #navigator-toolbox:hover .toolbarbutton-1 {
+    filter: grayscale(0%);
+    transition: filter 300ms ease !important;
+  }
+}

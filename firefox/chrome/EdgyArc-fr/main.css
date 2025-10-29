@@ -1,0 +1,323 @@
+/*
+  Styles by PritCee (@pritceeart)
+  Twitter: https://twitter.com/pritceeart
+
+  This CSS is open source and editable, and reusable in non-commercial projects.
+  Feel free to use, adapt, and elevate as needed. No support is provided, and your creativity is the limit.
+
+  Parts of the code were adapted from Edge FrFox (GitHub: https://github.com/edgefrfox)
+  and MrOtherGuy's Firefox Tweaks (GitHub: https://github.com/MrOtherGuy/firefox-csshacks).
+
+  Remember to respect the original authors' work and adhere to their licenses.
+*/
+
+/* Import external styles */
+@import url("autohide-sidebar-modified.css") not (-moz-pref("af.edgyarc.autohide-sidebar-slide"));
+@import url("autohide-sidebar-slide.css") (-moz-pref("af.edgyarc.autohide-sidebar-slide"));
+
+@import url("translucent-base.css");
+@import url("translucent-arc.css");
+@import url("urlbar-tweaks.css");
+@import url("not-edge-sidebar.css") not (-moz-pref("af.edgyarc.edge-sidebar"));
+@import url("edge-sidebar.css") (-moz-pref("af.edgyarc.edge-sidebar"));
+/*Other tweaks*/
+@import url("icons.css");
+@import url("sidebar-revamp.css") (-moz-pref("sidebar.revamp"));
+
+/*variables*/
+@media (-moz-pref("uc.tweak.floating-tabs")) {
+  :root:not([lwtheme]),
+  :root[privatebrowsingmode="temporary"]:where(
+      [style*="--lwt-accent-color: rgb(28, 27, 34)"]:not(
+          [style*="--newtab-background-color-secondary: rgb(66, 65, 77)"]
+        )
+    ) {
+    --lwt-accent-color: light-dark(#ececec, #282828) !important;
+  }
+}
+
+:root {
+  --af-bg-transition: background-color 0ms linear !important;
+  --af-content-border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(220, 220, 220, 0.2));
+  --af-content-shadow: 0 0 1px 1px light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+  --urlbar-icon-border-radius: 5px !important;
+  --toolbarbutton-border-radius: 8px !important;
+  --toolbarbutton-inner-padding: 8px !important;
+  --uc-toolbarbutton-inner-inline-padding: 8px !important;
+  --toolbarbutton-outer-padding: 2px !important;
+  --tabs-navbar-shadow-size: 0px !important;
+  --tab-selected-bgcolor: light-dark(rgba(255, 255, 255, 0.6), rgba(180, 180, 180, 0.4)) !important;
+  --uc-titlebar-drag-space: 8px !important;
+  --uc-sidebar-shadow: 0px 0px 0px 1px light-dark(rgba(0, 0, 0, 0.2), rgba(200, 200, 200, 0.4)),
+    0px 0px 18px 4px light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+
+  /* Make corners more rounded */
+  @media (-moz-pref("uc.tweak.rounded-corners")) {
+    --uc-tweak-rounded-corners-padding: 8px !important;
+    --uc-tweak-rounded-corners-radius: 7px !important;
+  }
+
+  /* String for the custom label. */
+  --uc-string-private: "Private";
+}
+
+:root,
+#navigator-toolbox::before,
+.browserContainer::before,
+#sidebar-box {
+  transition: var(--af-bg-transition) !important;
+}
+
+/* Fixes for Firefox to enable autohide */
+#sidebar-box {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* Styles for .sidebar-splitter */
+.sidebar-splitter {
+  border-color: rgba(0, 0, 0, 0) !important;
+  &:hover {
+    border-radius: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: var(--urlbar-box-active-bgcolor) !important;
+    transition: background-color 200ms ease-in-out;
+  }
+}
+
+/*sidebar header*/
+
+#sidebar-header {
+  & * {
+    font-size: 0.94em !important;
+  }
+  @media (-moz-pref("af.edgyarc.bottom-sidebar-header")) {
+    order: 4 !important;
+    @media not (-moz-pref("af.edgyarc.edge-sidebar")) {
+      #sidebar-switcher-target {
+        margin-bottom: 10px !important;
+      }
+    }
+    @media (-moz-pref("af.edgyarc.edge-sidebar")) {
+    }
+  }
+  @media not (-moz-pref("af.edgyarc.show-sidebar-header")) {
+    visibility: collapse !important; /*hide sidebar by default*/
+  }
+
+  #sidebar-switcher-target {
+    border-radius: 5px !important;
+  }
+  /*remove sidebar elements*/
+  & #sidebar-close {
+    display: none !important;
+  }
+
+  #sidebar-throbber,
+  #sidebar-spacer {
+    display: none !important;
+  }
+}
+
+:root:not([customizing]) {
+  &:has(#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:not([hidden])),
+  &:has(#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"]:not([hidden])),
+  &:has(#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"]:not([hidden])) {
+    &:not([drawtitle]) #nav-bar {
+      --uc-tab-top-margin: 0px;
+    }
+  }
+
+  @media (-moz-pref("uc.tweak.hide-tabs-bar.always")) {
+    &:not([drawtitle]) #nav-bar {
+      --uc-tab-top-margin: 0px;
+    }
+  }
+}
+
+/*sidebar header rounded container*/
+#sidebar-switcher-target {
+  padding: 5px !important;
+  margin: auto 2px !important;
+  opacity: 0.8 !important;
+
+  &:hover {
+    border: var(--af-content-border) !important;
+  }
+}
+
+/* indicator for private browsing mode with tabs hidden */
+
+:root[privatebrowsingmode="temporary"] {
+  /*remove the default label*/
+  #private-browsing-indicator-with-label {
+    display: none !important;
+  }
+  #nav-bar::after {
+    content: var(--uc-string-private);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 20px;
+    background-color: purple;
+    color: white;
+    opacity: 0.6;
+    position: absolute;
+    top: calc(50% - 10px);
+    pointer-events: none !important;
+  }
+
+  @media (-moz-platform: macos) {
+    /*make space in nav bar for the private window label*/
+    #nav-bar {
+      padding-right: 70px !important;
+      &::after {
+        /*priv win label*/
+        right: 8px;
+        border-radius: 4px;
+      }
+    }
+  }
+  @media (-moz-platform: windows) {
+    #nav-bar {
+      padding-left: 70px !important;
+      &::after {
+        /*priv win label*/
+        left: 8px;
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
+/*fade toolbar background image for lwthemes - goes really great with Firefox Color setups!*/
+#navigator-toolbox {
+  border-bottom: none !important;
+
+  :root[lwtheme] & {
+    background-image: none !important; /*remove the background image from the actual toolbox*/
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2 !important;
+      pointer-events: none;
+      mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.8) 10%,
+        rgba(0, 0, 0, 0.4) 40%,
+        rgba(0, 0, 0, 0.1) 65%,
+        rgba(0, 0, 0, 0) 85%
+      );
+      background-image: var(--lwt-additional-images) !important;
+      background-repeat: var(--lwt-background-tiling);
+      background-position: var(--lwt-background-alignment);
+      opacity: 1 !important;
+    }
+  }
+}
+
+/* remove toolbar bg */
+#nav-bar,
+#PersonalToolbar,
+ /*remove tab panel bg*/
+#tabbrowser-tabpanels {
+  background-color: transparent !important;
+}
+/*remove banner notification bg*/
+#tab-notification-deck .notificationbox-stack {
+  background-color: transparent !important;
+  padding: 8px !important;
+}
+
+/*make sure sidebar expand animation look and feel less jank*/
+#webextpanels-window {
+  background-color: transparent !important;
+}
+
+/*add padding to toolbar items*/
+.panel-no-padding {
+  padding: 2px !important;
+}
+
+/* macOS specific positioning */
+@media (-moz-platform: macos) {
+  /* Offset navbar contents to make space for the window controls */
+  &:not([drawtitle]):not([inFullscreen]) #nav-bar {
+    padding-left: calc(0px + var(--uc-titlebar-drag-space)) !important;
+
+    /* Remove the padding from the side of the navbar */
+    & #nav-bar-customization-target > :is(toolbarbutton, toolbaritem):first-child {
+      padding-inline-start: 0px !important;
+    }
+  }
+}
+
+/*Windows specific positioning*/
+@media (-moz-platform: windows) {
+  .titlebar-buttonbox-container {
+    z-index: 999 !important;
+  }
+  .titlebar-button {
+    padding: 0 15px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    margin: 4px !important;
+  }
+  :root[sizemode="normal"]:not([drawtitle]):not([inFullscreen]) .titlebar-button {
+    margin-top: 5px !important;
+  }
+  #urlbar,
+  #urlbar[breakout][breakout-extend] {
+    z-index: 600 !important;
+  }
+}
+
+.browserContainer > findbar,
+.browserContainer > .devtools-toolbox-bottom-iframe {
+  z-index: 2 !important;
+}
+
+.infobar {
+  background-color: light-dark(rgba(255, 255, 255, 1), rgba(30, 30, 30, 0.6)) !important;
+  &::before {
+    opacity: 0.6 !important;
+  }
+}
+
+#commonDialogWindow {
+  background-color: var(--arrowpanel-background) !important;
+}
+
+#tab-notification-deck .notificationbox-stack {
+  padding: 0px !important;
+}
+
+/*make sure sidebar expand animation look and feel less jank*/
+#webextpanels-window {
+  background-color: transparent !important;
+}
+
+.findbar-textbox {
+  background-color: light-dark(rgba(255, 255, 255, 0.8), rgba(20, 20, 20, 0.6)) !important;
+}
+
+.browserContainer > findbar {
+  :root[lwtheme] & {
+    background-image: none !important;
+  }
+}
+
+.dialogFrame {
+  background-color: var(--arrowpanel-background) !important;
+}
+
+/* Prevent pages from being completely transparent */
+.browserStack > browser {
+  background-color: var(--lwt-accent-color);
+}

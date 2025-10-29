@@ -1,0 +1,3 @@
+twmn-git
+xautolock
+neofetch
