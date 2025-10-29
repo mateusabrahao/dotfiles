@@ -56,3 +56,8 @@ zip
 obsidian
 syncthing
 emacs
+ripgrep
+fd
+fzf
+curl
+wget
