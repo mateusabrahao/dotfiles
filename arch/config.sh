@@ -31,13 +31,14 @@ fi
 
 echo "> Setting up configuration files..."
 mkdir -p ~/.config
+mkdir -p ~/org
 ln -sf "$(pwd)/i3" ~/.config/i3
 ln -sf "$(pwd)/kitty" ~/.config/kitty
 ln -sf "$(pwd)/picom" ~/.config/picom
 rm -rf ~/.doom.d
 ln -sf "$(pwd)/doom" ~/.doom.d
 ~/.emacs.d/bin/doom sync
-mkdir -p ~/org
+git -C ~/.emacs.d fetch origin && git -C ~/.emacs.d reset --hard origin/master
 
 echo "> Enabling tlp power management service..."
 sudo systemctl enable tlp.service
