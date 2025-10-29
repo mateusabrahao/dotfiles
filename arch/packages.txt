@@ -61,3 +61,4 @@ fd
 fzf
 curl
 wget
+ttf-meslo-nerd
