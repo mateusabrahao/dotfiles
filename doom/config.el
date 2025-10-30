@@ -17,4 +17,4 @@
 
 ;; Set font
 (setq doom-font (font-spec :family "MesloLGS Nerd Font Mono" :size 12)
-      doom-variable-pitch-font (font-spec :family "MesloLGS Nerd Font Mono" :size 12)
+      doom-variable-pitch-font (font-spec :family "MesloLGS Nerd Font Mono" :size 12))
