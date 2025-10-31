@@ -62,3 +62,4 @@ fzf
 curl
 wget
 ttf-meslo-nerd
+redshift
