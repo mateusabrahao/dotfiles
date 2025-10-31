@@ -55,11 +55,12 @@ unzip
 zip
 obsidian
 syncthing
-emacs
 ripgrep
 fd
 fzf
 curl
 wget
+emacs
 ttf-meslo-nerd
 redshift
+tk
