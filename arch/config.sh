@@ -40,6 +40,23 @@ ln -sf "$(pwd)/doom" ~/.doom.d
 fc-cache -fv
 git -C ~/.emacs.d fetch origin && git -C ~/.emacs.d reset --hard origin/master
 ~/.emacs.d/bin/doom sync
+mkdir -p ~/.config/redshift
+tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
+[redshift]
+temp-day=6000
+temp-night=5200
+fade=0
+dawn-time=3:00-4:00
+dusk-time=18:00-19:00
+brightness-day=1
+brightness-night=0.9
+gamma=1
+location-provider=manual
+adjustment-method=randr
+
+[randr]
+;screen=0
+EOF
 
 echo "> Enabling tlp power management service..."
 sudo systemctl enable tlp.service
