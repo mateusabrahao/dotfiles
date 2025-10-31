@@ -167,6 +167,9 @@ bindsym Shift+Print exec --no-startup-id maim -s ~/Pictures/screenshot_$(date +%
 # keyboard layout
 exec_always setxkbmap -model abnt2 -layout br -variant abnt2
 
+# redshift
+exec --no-startup-id redshift &
+
 # Disable window titlebars entirely
 for_window [class="^.*"] border pixel 2
 
