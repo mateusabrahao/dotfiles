@@ -218,7 +218,7 @@ exec --no-startup-id twmnd
 
 
 # battery notification
-exec --no-startup-id /usr/bin/i3-battery-popup -L 20 for_window [title="Battery Warning"] sticky enable
+exec --no-startup-id i3-battery-popup -L 20 for_window [title="Battery Warning"] sticky enable
 
 # autolock
 exec --no-startup-id xautolock -corners -000 -time 10 -locker 'i3lock -c 000000' &
