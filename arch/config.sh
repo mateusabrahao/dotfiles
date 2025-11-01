@@ -44,9 +44,9 @@ mkdir -p ~/.config/redshift
 tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
 [redshift]
 temp-day=6000
-temp-night=5200
+temp-night=4800
 fade=0
-dawn-time=3:00-4:00
+dawn-time=4:00-6:00
 dusk-time=18:00-19:00
 brightness-day=1
 brightness-night=0.9
@@ -58,14 +58,11 @@ adjustment-method=randr
 ;screen=0
 EOF
 
-echo "> Enabling tlp power management service..."
-sudo systemctl enable tlp.service
-sudo systemctl start tlp.service
-
-echo "> Setting up wallpaper..."
+echo "> Setting up wallpaper and screenshots folder..."
 mkdir -p ~/Pictures
+mkdir -p ~/Pictures/screenshots
 if [ ! -f ~/Pictures/wallpaper.jpg ]; then
-    cp "$(pwd)/wallpapers/lain.jpg" ~/Pictures/wallpaper.jpg
+    cp "$(pwd)/wallpapers/lain-ascii.jpg" ~/Pictures/wallpaper.jpg
 fi
 
 echo "> Setting up X session..."
@@ -83,6 +80,10 @@ Section "InputClass"
     Option "Tapping" "on"
 EndSection
 EOF
+
+echo "> Enabling tlp power management service..."
+sudo systemctl enable tlp.service
+sudo systemctl start tlp.service
 
 echo "> Optimizing disk power settings..."
 mapfile -t hdds < <(lsblk -ndo NAME,TYPE,ROTA | awk '$2=="disk" && $3=="1" && $1 !~ /^nvme/ {print "/dev/"$1}')  
