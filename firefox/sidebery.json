@@ -17,7 +17,7 @@
     "hideAddBtn": false,
     "hideSettingsBtn": false,
     "navBtnCount": true,
-    "hideEmptyPanels": false,
+    "hideEmptyPanels": true,
     "hideDiscardedTabPanels": false,
     "navActTabsPanelLeftClickAction": "scroll",
     "navActBookmarksPanelLeftClickAction": "scroll",
