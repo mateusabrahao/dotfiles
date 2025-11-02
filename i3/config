@@ -161,8 +161,8 @@ bar {
 }
 
 # screenschots
-bindsym Print exec --no-startup-id maim ~/Pictures/screenshots/screenshot_$(date +%Y%m%d_%I%M%S_%p).png
-bindsym Shift+Print exec --no-startup-id maim -s ~/Pictures/screenshots/screenshot_$(date +%Y%m%d_%I%M%S_%p).png
+bindsym Print exec --no-startup-id maim --hidecursor ~/Pictures/screenshots/screenshot_$(date +%Y%m%d_%I%M%S_%p).png
+bindsym Shift+Print exec --no-startup-id maim -s --hidecursor ~/Pictures/screenshots/screenshot_$(date +%Y%m%d_%I%M%S_%p).png
 
 # keyboard layout
 exec_always setxkbmap -model abnt2 -layout br -variant abnt2
