@@ -33,8 +33,7 @@ pulseaudio
 reflector
 rofi
 rsync
-maim
-slop
+flameshot
 smartmontools
 sysfsutils
 tlp
