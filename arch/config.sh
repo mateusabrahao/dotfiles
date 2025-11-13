@@ -43,8 +43,8 @@ git -C ~/.emacs.d fetch origin && git -C ~/.emacs.d reset --hard origin/master
 mkdir -p ~/.config/redshift
 tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
 [redshift]
-temp-day=5500
-temp-night=3700
+temp-day=5400
+temp-night=3200
 fade=0
 dawn-time=4:00-6:00
 dusk-time=18:00-19:00
