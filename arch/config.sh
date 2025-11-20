@@ -21,25 +21,12 @@ fi
 echo "> Installing AUR packages..."
 yay -S --needed - < aur.txt
 
-echo "> Installing doom emacs..."
-if [ ! -d ~/.emacs.d ]; then
-    git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d
-    ~/.emacs.d/bin/doom install --no-env
-else
-    ~/.emacs.d/bin/doom sync
-fi
-
 echo "> Setting up configuration files..."
 mkdir -p ~/.config
-mkdir -p ~/org
 ln -sf "$(pwd)/i3" ~/.config/i3
 ln -sf "$(pwd)/kitty" ~/.config/kitty
 ln -sf "$(pwd)/picom" ~/.config/picom
-rm -rf ~/.doom.d
-ln -sf "$(pwd)/doom" ~/.doom.d
 fc-cache -fv
-git -C ~/.emacs.d fetch origin && git -C ~/.emacs.d reset --hard origin/master
-~/.emacs.d/bin/doom sync
 mkdir -p ~/.config/redshift
 tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
 [redshift]
