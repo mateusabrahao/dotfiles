@@ -6,7 +6,7 @@ echo "> Updating system..."
 sudo pacman -Syu --noconfirm
 
 echo "> Installing official packages..."
-sudo pacman -S --needed --noconfirm - < packages.txt
+sudo pacman -S --needed --noconfirm $(cat packages.txt)
 
 echo "> Checking for yay..."
 if ! command -v yay &> /dev/null; then
@@ -19,7 +19,7 @@ if ! command -v yay &> /dev/null; then
 fi
 
 echo "> Installing AUR packages..."
-yay -S --needed - < aur.txt
+yay -S --needed --noconfirm $(cat aur.txt) || true
 
 echo "> Setting up configuration files..."
 mkdir -p ~/.config
@@ -55,13 +55,12 @@ chmod +x ~/.local/bin/syncthing-web
 if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
     echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
 fi
-source ~/.bashrc
 
 echo "> Setting up wallpaper and screenshots folder..."
 mkdir -p ~/Pictures
 mkdir -p ~/Pictures/screenshots
 if [ ! -f ~/Pictures/wallpaper.jpg ]; then
-    cp "$(pwd)/wallpapers/lain-ascii.jpg" ~/Pictures/wallpaper.jpg
+    cp "$(pwd)/wallpapers/windows.jpg" ~/Pictures/wallpaper.jpg
 fi
 
 echo "> Setting up X session..."
