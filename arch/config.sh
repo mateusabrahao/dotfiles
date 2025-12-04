@@ -13,7 +13,7 @@ if ! command -v yay &> /dev/null; then
     echo "  > Installing yay..."
     git clone https://aur.archlinux.org/yay.git
     cd yay
-    makepkg -si --noconfirm --noedit -C
+    makepkg -si --noconfirm --noedit --cleanbuild
     cd ..
     rm -rf yay
 fi
