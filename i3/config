@@ -173,8 +173,8 @@ exec --no-startup-id redshift &
 for_window [class="^.*"] border pixel 2
 
 # Set inner/outer gaps
-gaps inner 4
-gaps outer 2
+# gaps inner 4
+# gaps outer 2
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
