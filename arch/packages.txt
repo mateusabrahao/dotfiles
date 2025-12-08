@@ -28,6 +28,8 @@ neofetch
 network-manager-applet
 networkmanager
 noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
 picom
 pulseaudio
 reflector
