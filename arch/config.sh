@@ -6,7 +6,11 @@ echo "> Updating system..."
 sudo pacman -Syu --noconfirm
 
 echo "> Installing official packages..."
-sudo pacman -S --needed --noconfirm $(cat packages.txt)
+if [ -f packages.txt ]; then
+    sudo pacman -S --needed --noconfirm $(cat packages.txt)
+else
+    echo "  > WARNING: packages.txt not found, skipping..."
+fi
 
 echo "> Checking for yay..."
 if ! command -v yay &> /dev/null; then
@@ -19,7 +23,11 @@ if ! command -v yay &> /dev/null; then
 fi
 
 echo "> Installing AUR packages..."
-yay -S --needed --noconfirm $(cat aur.txt) || true
+if [ -f aur.txt ]; then
+    yay -S --needed --noconfirm $(cat aur.txt) || echo "  > WARNING: Some AUR packages failed to install"
+else
+    echo "  > WARNING: aur.txt not found, skipping..."
+fi
 
 echo "> Setting up configuration files..."
 mkdir -p ~/.config
@@ -57,15 +65,17 @@ if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
 fi
 
 echo "> Setting up wallpaper and screenshots folder..."
-mkdir -p ~/Pictures
 mkdir -p ~/Pictures/screenshots
 if [ ! -f ~/Pictures/wallpaper.jpg ]; then
-    cp "$(pwd)/wallpapers/windows.jpg" ~/Pictures/wallpaper.jpg
+    if [ -f "$(pwd)/wallpapers/windows.jpg" ]; then
+        cp "$(pwd)/wallpapers/windows.jpg" ~/Pictures/wallpaper.jpg
+    else
+        echo "  > WARNING: wallpapers/windows.jpg not found"
+    fi
 fi
 
 echo "> Setting up X session..."
 echo "exec i3" > ~/.xinitrc
-chmod +x ~/.xinitrc
 
 echo "> Setting up touchpad..."
 touchpad_conf="/etc/X11/xorg.conf.d/30touchpad.conf"
@@ -126,8 +136,10 @@ else
             runtime_pm=$(cat "$runtime_pm_file" 2>/dev/null || echo "unknown")
             
             if [ "$rpm_policy" != "max_performance" ] || [ "$runtime_pm" != "on" ]; then
-        echo "  > ERROR: settings may not be correctly applied!"
-    fi
+                echo "  > WARNING: Settings may not be correctly applied for $disk!"
+                echo "    rpm_policy: $rpm_policy (expected: max_performance)"
+                echo "    runtime_pm: $runtime_pm (expected: on)"
+            fi
         done  
     fi  
 fi  
