@@ -1,6 +1,4 @@
-# graphics (intel/amd)
 mesa
-
 jack2
 xf86-input-libinput
 base
@@ -53,7 +51,6 @@ xss-lock
 zathura
 unzip
 zip
-obsidian
 syncthing
 ripgrep
 redshift
