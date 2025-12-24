@@ -1,3 +1,6 @@
+# graphics (intel/amd)
+mesa
+
 jack2
 xf86-input-libinput
 base
@@ -8,7 +11,6 @@ efibootmgr
 fastfetch
 feh
 firefox
-grub
 htop
 i3-wm
 i3lock
@@ -24,7 +26,6 @@ linux-headers
 mpv
 mtools
 nano
-neofetch
 network-manager-applet
 networkmanager
 noto-fonts
@@ -39,9 +40,7 @@ flameshot
 smartmontools
 sysfsutils
 tlp
-twmn-git
 vim
-xautolock
 xclip
 xorg-server
 xorg-xev
