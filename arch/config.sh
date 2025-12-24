@@ -9,7 +9,7 @@ echo "> Installing official packages..."
 if [ -f packages.txt ]; then
     sudo pacman -S --needed --noconfirm $(cat packages.txt)
 else
-    echo "  > WARNING: packages.txt not found, skipping..."
+    echo "  > WARNING: packages.txt not found -- skipping..."
 fi
 
 echo "> Checking for yay..."
@@ -26,7 +26,7 @@ echo "> Installing AUR packages..."
 if [ -f aur.txt ]; then
     yay -S --needed --noconfirm $(cat aur.txt) || echo "  > WARNING: Some AUR packages failed to install"
 else
-    echo "  > WARNING: aur.txt not found, skipping..."
+    echo "  > WARNING: aur.txt not found -- skipping..."
 fi
 
 echo "> Setting up configuration files..."
@@ -38,11 +38,11 @@ fc-cache -fv
 mkdir -p ~/.config/redshift
 tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
 [redshift]
-temp-day=5400
-temp-night=3200
+temp-day=5200
+temp-night=3000
 fade=0
-dawn-time=4:00-6:00
-dusk-time=18:00-19:00
+dawn-time=3:30-5:30
+dusk-time=17:00-18:30
 brightness-day=1
 brightness-night=0.9
 gamma=1
@@ -67,10 +67,10 @@ fi
 echo "> Setting up wallpaper and screenshots folder..."
 mkdir -p ~/Pictures/screenshots
 if [ ! -f ~/Pictures/wallpaper.jpg ]; then
-    if [ -f "$(pwd)/wallpapers/windows.jpg" ]; then
-        cp "$(pwd)/wallpapers/windows.jpg" ~/Pictures/wallpaper.jpg
+    if [ -f "~/dotfiles/wallpapers/desktop2.jpg" ]; then
+        cp "~/dotfiles/wallpapers/desktop2.jpg" ~/Pictures/wallpaper.jpg
     else
-        echo "  > WARNING: wallpapers/windows.jpg not found"
+        echo "  > WARNING: wallpapers/desktop2.jpg not found -- skipping"
     fi
 fi
 
@@ -96,11 +96,11 @@ sudo systemctl start tlp.service
 echo "> Optimizing disk power settings..."
 mapfile -t hdds < <(lsblk -ndo NAME,TYPE,ROTA | awk '$2=="disk" && $3=="1" && $1 !~ /^nvme/ {print "/dev/"$1}')  
 if [ ${#hdds[@]} -eq 0 ]; then
-    echo "  > No SATA HDDs detected: skipping..."
+    echo "  > No SATA HDDs detected -- skipping..."
 else
     mapfile -t hosts < <(find /sys/class/scsi_host/ -maxdepth 1 -type l | sed 's|.*/||')
     if [ ${#hosts[@]} -eq 0 ]; then  
-        echo "  > No AHCI hosts detected: skipping..."  
+        echo "  > No AHCI hosts detected -- skipping..."  
     else  
         conf="/etc/tlp.conf"  
         backup="/etc/tlpbackup.conf"  
