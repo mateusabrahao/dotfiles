@@ -86,11 +86,11 @@ sudo systemctl start tlp.service
 echo "> Optimizing disk power settings..."
 mapfile -t hdds < <(lsblk -ndo NAME,TYPE,ROTA | awk '$2=="disk" && $3=="1" && $1 !~ /^nvme/ {print "/dev/"$1}')  
 if [ ${#hdds[@]} -eq 0 ]; then
-    echo "  > No SATA HDDs detected: Skipping..."
+    echo "  > No SATA HDDs detected: skipping..."
 else
     mapfile -t hosts < <(find /sys/class/scsi_host/ -maxdepth 1 -type l | sed 's|.*/||')
     if [ ${#hosts[@]} -eq 0 ]; then  
-        echo "  > No AHCI hosts detected: Skipping..."  
+        echo "  > No AHCI hosts detected: skipping..."  
     else  
         conf="/etc/tlp.conf"  
         backup="/etc/tlpbackup.conf"  
