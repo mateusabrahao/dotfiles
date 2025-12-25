@@ -2,19 +2,20 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-echo "> Updating system..."
+echo " > Updating system..."
 sudo pacman -Syu --noconfirm
 
-echo "> Installing official packages..."
+echo " > Installing official packages..."
 if [ -f packages.txt ]; then
     sudo pacman -S --needed --noconfirm $(cat packages.txt)
 else
     echo "  > WARNING: packages.txt not found -- skipping..."
 fi
 
-echo "> Checking for yay..."
+echo " > Checking for yay..."
 if ! command -v yay &> /dev/null; then
-    echo "  > Installing yay..."
+    echo "   > Installing yay..."
+    rm -rf yay
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si --noconfirm --cleanbuild
@@ -22,14 +23,14 @@ if ! command -v yay &> /dev/null; then
     rm -rf yay
 fi
 
-echo "> Installing AUR packages..."
+echo " > Installing AUR packages..."
 if [ -f aur.txt ]; then
     yay -S --needed --noconfirm $(cat aur.txt) || echo "  > WARNING: Some AUR packages failed to install"
 else
     echo "  > WARNING: aur.txt not found -- skipping..."
 fi
 
-echo "> Setting up configuration files..."
+echo " > Setting up configuration files..."
 mkdir -p ~/.config
 ln -sf "$(pwd)/i3" ~/.config/i3
 ln -sf "$(pwd)/kitty" ~/.config/kitty
@@ -53,7 +54,7 @@ adjustment-method=randr
 ;screen=0
 EOF
 
-echo "> Setting up syncthing web shortcut..."
+echo " > Setting up syncthing web shortcut..."
 mkdir -p ~/.local/bin
 tee ~/.local/bin/syncthing-web > /dev/null <<'EOF'
 #!/bin/bash
@@ -64,7 +65,7 @@ if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
     echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
 fi
 
-echo "> Setting up wallpaper and screenshots folder..."
+echo " > Setting up wallpaper and screenshots folder..."
 mkdir -p ~/Pictures/screenshots
 if [ ! -f ~/Pictures/wallpaper.jpg ]; then
     if [ -f "$HOME/dotfiles/wallpapers/desktop2.jpg" ]; then
@@ -74,10 +75,10 @@ if [ ! -f ~/Pictures/wallpaper.jpg ]; then
     fi
 fi
 
-echo "> Setting up X session..."
+echo " > Setting up X session..."
 echo "exec i3" > ~/.xinitrc
 
-echo "> Setting up touchpad..."
+echo " > Setting up touchpad..."
 touchpad_conf="/etc/X11/xorg.conf.d/30touchpad.conf"
 sudo mkdir -p "$(dirname "$touchpad_conf")"
 sudo tee "$touchpad_conf" > /dev/null <<'EOF'
@@ -89,18 +90,18 @@ Section "InputClass"
 EndSection
 EOF
 
-echo "> Enabling tlp power management service..."
+echo " > Enabling tlp power management service..."
 sudo systemctl enable tlp.service
 sudo systemctl start tlp.service
 
-echo "> Optimizing disk power settings..."
+echo " > Optimizing disk power settings..."
 mapfile -t hdds < <(lsblk -ndo NAME,TYPE,ROTA | awk '$2=="disk" && $3=="1" && $1 !~ /^nvme/ {print "/dev/"$1}')  
 if [ ${#hdds[@]} -eq 0 ]; then
-    echo "  > No SATA HDDs detected -- skipping..."
+    echo "   > No SATA HDDs detected -- skipping..."
 else
     mapfile -t hosts < <(find /sys/class/scsi_host/ -maxdepth 1 -type l | sed 's|.*/||')
     if [ ${#hosts[@]} -eq 0 ]; then  
-        echo "  > No AHCI hosts detected -- skipping..."  
+        echo "   > No AHCI hosts detected -- skipping..."  
     else  
         conf="/etc/tlp.conf"  
         backup="/etc/tlpbackup.conf"  
@@ -136,12 +137,12 @@ else
             runtime_pm=$(cat "$runtime_pm_file" 2>/dev/null || echo "unknown")
             
             if [ "$rpm_policy" != "max_performance" ] || [ "$runtime_pm" != "on" ]; then
-                echo "  > WARNING: Settings may not be correctly applied for $disk!"
-                echo "    rpm_policy: $rpm_policy (expected: max_performance)"
-                echo "    runtime_pm: $runtime_pm (expected: on)"
+                echo "   > WARNING: Settings may not be correctly applied for $disk!"
+                echo "      > rpm_policy: $rpm_policy (expected: max_performance)"
+                echo "      > runtime_pm: $runtime_pm (expected: on)"
             fi
         done  
     fi  
 fi  
     
-echo "> Configuration completed!"
+echo " > Done!"
