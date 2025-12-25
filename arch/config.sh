@@ -67,8 +67,8 @@ fi
 echo "> Setting up wallpaper and screenshots folder..."
 mkdir -p ~/Pictures/screenshots
 if [ ! -f ~/Pictures/wallpaper.jpg ]; then
-    if [ -f "~/dotfiles/wallpapers/desktop2.jpg" ]; then
-        cp "~/dotfiles/wallpapers/desktop2.jpg" ~/Pictures/wallpaper.jpg
+    if [ -f "$HOME/dotfiles/wallpapers/desktop2.jpg" ]; then
+        cp "$HOME/dotfiles/wallpapers/desktop2.jpg" "$HOME/Pictures/wallpaper.jpg"
     else
         echo "  > WARNING: wallpapers/desktop2.jpg not found -- skipping"
     fi
