@@ -9,7 +9,7 @@ echo " > Installing official packages..."
 if [ -f packages.txt ]; then
     sudo pacman -S --needed --noconfirm $(cat packages.txt)
 else
-    echo "  > WARNING: packages.txt not found -- skipping..."
+    echo "   > WARNING: packages.txt not found -- skipping..."
 fi
 
 echo " > Checking for yay..."
@@ -25,9 +25,9 @@ fi
 
 echo " > Installing AUR packages..."
 if [ -f aur.txt ]; then
-    yay -S --needed --noconfirm $(cat aur.txt) || echo "  > WARNING: Some AUR packages failed to install"
+    yay -S --needed --noconfirm $(cat aur.txt) || echo "   > WARNING: Some AUR packages failed to install"
 else
-    echo "  > WARNING: aur.txt not found -- skipping..."
+    echo "   > WARNING: aur.txt not found -- skipping..."
 fi
 
 echo " > Setting up configuration files..."
