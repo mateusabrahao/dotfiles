@@ -1,6 +1,7 @@
 #!/bin/bash    
 set -euo pipefail
-cd "$(dirname "$0")"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 echo " > Updating system..."
 sudo pacman -Syu --noconfirm
@@ -32,9 +33,9 @@ fi
 
 echo " > Setting up configuration files..."
 mkdir -p ~/.config
-ln -sf "$(pwd)/i3" ~/.config/i3
-ln -sf "$(pwd)/kitty" ~/.config/kitty
-ln -sf "$(pwd)/picom" ~/.config/picom
+ln -sf "$DOTFILES_DIR/i3" ~/.config/i3
+ln -sf "$DOTFILES_DIR/kitty" ~/.config/kitty
+ln -sf "$DOTFILES_DIR/picom" ~/.config/picom
 fc-cache -fv
 mkdir -p ~/.config/redshift
 tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
