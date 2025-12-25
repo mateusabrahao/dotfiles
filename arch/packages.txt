@@ -55,3 +55,4 @@ syncthing
 ripgrep
 redshift
 tk
+go
