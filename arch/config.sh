@@ -40,11 +40,11 @@ fc-cache -fv
 mkdir -p ~/.config/redshift
 tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
 [redshift]
-temp-day=5200
-temp-night=3000
+temp-day=5500
+temp-night=3200
 fade=0
-dawn-time=3:30-5:30
-dusk-time=17:00-18:30
+dawn-time=3:00-4:00
+dusk-time=17:30-18:30
 brightness-day=1
 brightness-night=0.9
 gamma=1
