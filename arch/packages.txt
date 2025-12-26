@@ -56,3 +56,4 @@ ripgrep
 redshift
 tk
 go
+ttf-sourcecodepro-nerd
