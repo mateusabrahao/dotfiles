@@ -118,9 +118,6 @@
        :timeout 0.25
        "q" 'toggle-input-method))
 
-(after! evil
-  (require 'evil-maps))
-
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
