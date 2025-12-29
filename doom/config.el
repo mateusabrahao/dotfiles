@@ -65,7 +65,11 @@
       (concat "${title:*} "
               (propertize "${tags:10}" 'face 'org-tag)))
 
-;;(setq org-roam-capture-templates
+(setq org-roam-capture-templates
+      '(("d" "default" plain "%?"
+         :if-new (file+head "${slug}.org"
+                            "#+title: ${title}\n")
+         :unnarrowed t)))
 
 (setq org-roam-dailies-directory "daily/")
 
