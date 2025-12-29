@@ -45,6 +45,8 @@
 
 (setq org-roam-file-extensions '("org"))
 
+(setq default-directory "~/notes/")
+
 ;; (use-package! pangu-spacing
 ;;   :ensure t
 ;;   :config
