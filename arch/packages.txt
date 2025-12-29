@@ -57,3 +57,8 @@ redshift
 tk
 go
 ttf-sourcecodepro-nerd
+fd
+npm
+aspell
+aspell-en
+aspell-pt
