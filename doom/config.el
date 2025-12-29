@@ -68,18 +68,9 @@
 (setq org-roam-dailies-directory "daily/")
 
 (setq org-roam-dailies-capture-templates
-      '(("d" "daily" entry
-         "* meow\n\
-    - [ ] exercise\n\
-    - [ ] read\n\
-    - [ ] meditate\n\
-    - [ ] anki\n\
-    - [ ] write\n\
-    - [ ] skincare\n\
-        - [ ] am\n\
-        - [ ] pm\n\
-    - [ ] medicines\n"
-         :if-new (file+head "%<%Y-%m-%d>.org"
+      '(("d" "daily" plain
+         "* meow\n- [ ] exercise\n- [ ] read\n- [ ] meditate\n- [ ] anki\n- [ ] write\n- [ ] skincare\n  - [ ] am\n  - [ ] pm\n- [ ] medicines\n"
+         :target (file+head "%<%Y-%m-%d>.org"
                             "#+title: %<%Y-%m-%d>\n"))))
 
 (use-package! org-roam
