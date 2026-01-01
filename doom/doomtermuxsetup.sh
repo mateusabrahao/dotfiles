@@ -17,7 +17,11 @@ pkg install -y \
   ripgrep \
   fd \
   clang \
-  coreutils
+  coreutils \
+  aspell \
+  aspell-en \
+  aspell-pt \
+  nodejs
 
 if [ ! -d "$DOOM_DIR" ]; then
     echo " > Cloning Doom Emacs..."
