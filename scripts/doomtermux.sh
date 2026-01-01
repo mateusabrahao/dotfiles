@@ -6,6 +6,8 @@ DOTFILES_DIR="$HOME/dotfiles"
 DOOM_DIR="$HOME/.config/emacs"
 DOOM_CONFIG_DIR="$HOME/.config/doom"
 BASHRC="$HOME/.bashrc"
+TERMUX_DIR="$HOME/.termux"
+FONT_URL="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/SourceCodePro/SauceCodeProNerdFontMono-Regular.ttf"
 
 echo " > Updating packages..."
 pkg update -y && pkg upgrade -y
@@ -21,7 +23,13 @@ pkg install -y \
   aspell \
   aspell-en \
   aspell-pt \
-  nodejs
+  nodejs \
+  curl
+
+echo " > Setting up Termux font..."
+mkdir -p "$TERMUX_DIR"
+curl -L "$FONT_URL" -o "$TERMUX_DIR/font.ttf"
+termux-reload-settings
 
 if [ ! -d "$DOOM_DIR" ]; then
     echo " > Cloning Doom Emacs..."
@@ -69,5 +77,4 @@ echo " > Syncing Doom configuration..."
 doom sync
 
 echo " > Doom Emacs setup complete!"
-echo " > Restart Termux or run: source ~/.bashrc"
-echo " > Launch with: emacs -nw"
+echo " > WARNING: Restart Termux"
