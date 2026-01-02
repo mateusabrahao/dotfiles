@@ -67,8 +67,21 @@
 
 (setq org-roam-capture-templates
       '(("d" "default" plain "%?"
-         :if-new (file+head "${slug}.org"
-                            "#+title: ${title}\n")
+         :if-new
+         (file+head "${slug}.org"
+                    "#+title: ${title}\n#+filetags: \n\n")
+         :unnarrowed t)
+
+        ("v" "video" plain "%?"
+         :if-new
+         (file+head "videos/${slug}.org"
+                    "#+title: ${title}\n#+filetags: :videos:\n#+roam_refs: \n\n")
+         :unnarrowed t)
+
+        ("b" "book" plain "%?"
+         :if-new
+         (file+head "books/${slug}.org"
+                    "#+title: ${title}\n#+filetags: :books:\n#+author: \n\n")
          :unnarrowed t)))
 
 (setq org-roam-dailies-directory "daily/")
