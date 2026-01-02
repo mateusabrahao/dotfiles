@@ -88,4 +88,4 @@ echo " > Syncing Doom configuration..."
 "$DOOM_DIR/bin/doom" sync
 
 echo " > Doom Emacs setup complete!"
-echo " > Restart Termux!!"
+echo " > Run: source ~/.bashrc"
