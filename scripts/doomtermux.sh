@@ -12,6 +12,13 @@ FONT_URL="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Sourc
 echo " > Updating packages..."
 pkg update -y && pkg upgrade -y
 
+if [ ! -d "$HOME/storage" ]; then
+    echo " > Setting up Termux storage..."
+    termux-setup-storage
+else
+    echo "   > Termux storage already set up -- skipping"
+fi
+
 echo " > Installing required packages..."
 pkg install -y \
   git \
