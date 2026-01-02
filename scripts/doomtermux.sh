@@ -51,7 +51,7 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     echo " > Cloning dotfiles repository..."
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
 else
-    echo "   > Dotfiles repo already exists -- pulling updates..."
+    echo "   > Dotfiles repo already exists -- skipping"
     git -C "$DOTFILES_DIR" pull
 fi
 
