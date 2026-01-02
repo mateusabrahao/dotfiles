@@ -79,7 +79,7 @@ done
 echo " > Installing Doom Emacs..."
 "$DOOM_DIR/bin/doom" install --force
 
-echo " > Setting up emacs alias"
+echo " > Setting up emacs alias..."
 if ! grep -q 'alias emacs="emacs -nw"' ~/.bashrc; then
     echo 'alias emacs="emacs -nw"' >> ~/.bashrc
 fi
