@@ -29,7 +29,6 @@ pkg install -y \
   coreutils \
   aspell \
   aspell-en \
-  aspell-pt \
   nodejs \
   curl
 
