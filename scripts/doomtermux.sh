@@ -7,7 +7,7 @@ DOOM_DIR="$HOME/.config/emacs"
 DOOM_CONFIG_DIR="$HOME/.config/doom"
 BASHRC="$HOME/.bashrc"
 TERMUX_DIR="$HOME/.termux"
-FONT_URL="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/SourceCodePro/SauceCodeProNerdFontMono-Regular.ttf"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/SourceCodePro/SauceCodeProNerdFontMono-Regular.ttf"
 
 echo " > Updating packages..."
 pkg update -y && pkg upgrade -y
@@ -28,24 +28,24 @@ pkg install -y \
 
 echo " > Setting up Termux font..."
 mkdir -p "$TERMUX_DIR"
-curl -L "$FONT_URL" -o "$TERMUX_DIR/font.ttf"
-termux-reload-settings
+curl -fL "$FONT_URL" -o "$TERMUX_DIR/font.ttf"
+if command -v termux-reload-settings &> /dev/null; then
+    termux-reload-settings
+fi
 
 if [ ! -d "$DOOM_DIR" ]; then
     echo " > Cloning Doom Emacs..."
-    git clone https://github.com/doomemacs/doomemacs "$DOOM_DIR"
+    git clone --depth 1 https://github.com/doomemacs/doomemacs "$DOOM_DIR"
 else
     echo "   > Doom Emacs already exists -- skipping"
 fi
 
-if ! grep -q 'config/emacs/bin' "$BASHRC"; then
+if ! grep -q 'config/emacs/bin' "$BASHRC" 2>/dev/null; then
     echo " > Adding Doom to PATH..."
     echo 'export PATH="$HOME/.config/emacs/bin:$PATH"' >> "$BASHRC"
 else
     echo "   > Doom already in PATH -- skipping"
 fi
-
-source "$BASHRC"
 
 if [ ! -d "$DOTFILES_DIR" ]; then
     echo " > Cloning dotfiles repository..."
@@ -73,8 +73,13 @@ done
 echo " > Installing Doom Emacs..."
 "$DOOM_DIR/bin/doom" install --force
 
+echo " > Setting up emacs alias"
+if ! grep -q 'alias emacs="emacs -nw"' ~/.bashrc; then
+    echo 'alias emacs="emacs -nw"' >> ~/.bashrc
+fi
+
 echo " > Syncing Doom configuration..."
-doom sync
+"$DOOM_DIR/bin/doom" sync
 
 echo " > Doom Emacs setup complete!"
-echo " > WARNING: Restart Termux"
+echo " > Restart Termux!!"
