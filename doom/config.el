@@ -43,6 +43,9 @@
 (setq org-directory "~/notes/org/")
 (setq org-roam-directory (file-truename "~/notes/roam/"))
 
+(custom-set-faces!
+  '(default :background "#242424"))
+
 (setq org-roam-file-extensions '("org"))
 
 ;; (use-package! pangu-spacing
