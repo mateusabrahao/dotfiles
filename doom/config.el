@@ -72,13 +72,13 @@
 
         ("v" "video" plain "%?"
          :if-new
-         (file+head "videos/${slug}.org"
+         (file+head "${slug}.org"
                     "#+title: ${title}\n#+filetags: :videos:\n#+roam_refs: \n\n")
          :unnarrowed t)
 
         ("b" "book" plain "%?"
          :if-new
-         (file+head "books/${slug}.org"
+         (file+head "${slug}.org"
                     "#+title: ${title}\n#+filetags: :books:\n#+author: \n\n")
          :unnarrowed t)))
 
