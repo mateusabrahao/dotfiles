@@ -3,6 +3,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
+# verify sudo access
+if ! sudo -v; then
+    echo "ERROR: This script requires sudo privileges"
+    exit 1
+fi
+
 echo " > Updating system..."
 sudo pacman -Syu --noconfirm
 
@@ -19,7 +25,12 @@ if ! command -v yay &> /dev/null; then
     rm -rf yay
     git clone https://aur.archlinux.org/yay.git
     cd yay
-    makepkg -si --noconfirm --cleanbuild
+    if ! makepkg -si --noconfirm --cleanbuild; then
+        echo "   > ERROR: yay installation failed"
+        cd ..
+        rm -rf yay
+        exit 1
+    fi
     cd ..
     rm -rf yay
 fi
@@ -68,12 +79,10 @@ fi
 
 echo " > Setting up wallpaper and screenshots folder..."
 mkdir -p ~/Pictures/screenshots
-if [ ! -f ~/Pictures/wallpaper.jpg ]; then
-    if [ -f "$HOME/dotfiles/wallpapers/desktop2.jpg" ]; then
-        cp "$HOME/dotfiles/wallpapers/desktop2.jpg" "$HOME/Pictures/wallpaper.jpg"
-    else
-        echo "  > WARNING: wallpapers/desktop2.jpg not found -- skipping"
-    fi
+if [ -f "$DOTFILES_DIR/wallpapers/desktop2.jpg" ]; then
+    cp "$DOTFILES_DIR/wallpapers/desktop2.jpg" "$HOME/Pictures/wallpaper.jpg"
+else
+    echo "   > WARNING: wallpapers/desktop2.jpg not found -- skipping..."
 fi
 
 echo " > Setting up X session..."
@@ -95,7 +104,20 @@ echo " > Enabling tlp power management service..."
 sudo systemctl enable tlp.service
 sudo systemctl start tlp.service
 
-echo " > Optimizing disk power settings..."
+# unified edit_conf function
+edit_tlp_conf() {
+    local key="$1"
+    local value="$2"
+    local conf="/etc/tlp.conf"
+    
+    if grep -qE "^\s*#?\s*${key}=" "$conf"; then
+        sudo sed -i "s|^\s*#\?\\s*${key}=.*|${key}=${value}|" "$conf"
+    else
+        echo "${key}=${value}" | sudo tee -a "$conf" >/dev/null
+    fi
+}
+
+echo " > Optimizing disk power settings (tlp)..."
 mapfile -t hdds < <(lsblk -ndo NAME,TYPE,ROTA | awk '$2=="disk" && $3=="1" && $1 !~ /^nvme/ {print "/dev/"$1}')  
 if [ ${#hdds[@]} -eq 0 ]; then
     echo "   > No SATA HDDs detected -- skipping..."
@@ -105,26 +127,13 @@ else
         echo "   > No AHCI hosts detected -- skipping..."  
     else  
         conf="/etc/tlp.conf"  
-        backup="/etc/tlpbackup.conf"  
-        if [ -f "$conf" ]; then
-            sudo cp "$conf" "$backup"  
-        else
+        if [ ! -f "$conf" ]; then
             sudo cp /usr/share/tlp/defaults.conf "$conf"  
         fi  
   
-        edit_conf() {  
-            local key="$1"  
-            local value="$2"  
-            if grep -qE "^\s*$key" "$conf"; then  
-                sudo sed -i "s|^\s*$key.*|$key=$value|" "$conf"  
-            else  
-                echo "$key=$value" | sudo tee -a "$conf" >/dev/null  
-            fi  
-        }  
-  
         denylist_hosts=$(IFS=,; echo "${hosts[*]}")  
-        edit_conf "SATA_LINKPWR_DENYLIST" "\"$denylist_hosts\""  
-        edit_conf "AHCI_RUNTIME_PM_ON_BAT" "on"  
+        edit_tlp_conf "SATA_LINKPWR_DENYLIST" "\"$denylist_hosts\""  
+        edit_tlp_conf "AHCI_RUNTIME_PM_ON_BAT" "on"  
   
         sudo systemctl restart tlp  
   
@@ -145,5 +154,71 @@ else
         done  
     fi  
 fi  
-    
+
+echo " > Configuring battery charge thresholds (tlp)..."
+
+START_CHARGE=75
+STOP_CHARGE=80
+TLP_CONF="/etc/tlp.conf"
+TLP_DEFAULTS="/usr/share/tlp/defaults.conf"
+
+# battery detection
+mapfile -t batteries < <(ls /sys/class/power_supply/ 2>/dev/null | grep '^BAT' || true)
+
+if [ ${#batteries[@]} -eq 0 ]; then
+    echo "   > No batteries detected -- skipping..."
+else
+    # detect supported batteries
+    supported_batteries=()
+
+    for bat in "${batteries[@]}"; do
+        if [ -w "/sys/class/power_supply/${bat}/charge_control_end_threshold" ] || \
+           [ -w "/sys/class/power_supply/${bat}/charge_stop_threshold" ]; then
+            supported_batteries+=("$bat")
+        else
+            echo "   > WARNING: $bat does not support charge thresholds -- skipping..."
+        fi
+    done
+
+    if [ ${#supported_batteries[@]} -eq 0 ]; then
+        echo "   > WARNING: No batteries with charge threshold support detected -- skipping..."
+    else
+        # ensure tlp.conf exists
+        if [ ! -f "$TLP_CONF" ]; then
+            sudo cp "$TLP_DEFAULTS" "$TLP_CONF"
+        fi
+
+        # configure thresholds
+        for bat in "${supported_batteries[@]}"; do
+            echo "   > Setting thresholds for $bat (${START_CHARGE}% → ${STOP_CHARGE}%)"
+            edit_tlp_conf "START_CHARGE_THRESH_${bat}" "$START_CHARGE"
+            edit_tlp_conf "STOP_CHARGE_THRESH_${bat}" "$STOP_CHARGE"
+        done
+
+        # apply
+        sudo systemctl restart tlp
+        sleep 2
+
+        # verify
+        for bat in "${supported_batteries[@]}"; do
+            start="unknown"
+            stop="unknown"
+
+            if [ -f "/sys/class/power_supply/${bat}/charge_control_start_threshold" ]; then
+                start=$(cat "/sys/class/power_supply/${bat}/charge_control_start_threshold" 2>/dev/null || echo "unknown")
+                stop=$(cat "/sys/class/power_supply/${bat}/charge_control_end_threshold" 2>/dev/null || echo "unknown")
+            elif [ -f "/sys/class/power_supply/${bat}/charge_start_threshold" ]; then
+                start=$(cat "/sys/class/power_supply/${bat}/charge_start_threshold" 2>/dev/null || echo "unknown")
+                stop=$(cat "/sys/class/power_supply/${bat}/charge_stop_threshold" 2>/dev/null || echo "unknown")
+            fi
+
+            if [ "$start" != "$START_CHARGE" ] || [ "$stop" != "$STOP_CHARGE" ]; then
+                echo "   > WARNING: Thresholds may not be correctly applied for $bat!"
+                echo "      > start: $start (expected: $START_CHARGE)"
+                echo "      > stop:  $stop  (expected: $STOP_CHARGE)"
+            fi
+        done
+    fi
+fi
+
 echo " > Done!"
