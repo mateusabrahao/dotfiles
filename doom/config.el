@@ -34,9 +34,8 @@
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 12))
 (setq doom-theme 'doom-gruvbox)
 
-(after! doom-themes
-  (custom-set-faces!
-   `(default ((t (:background "#242424"))))))
+(custom-set-faces!
+  '(default :background "#242424"))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
