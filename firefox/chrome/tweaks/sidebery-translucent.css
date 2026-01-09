@@ -1,0 +1,16 @@
+/* Translucency support for Sidebery */
+@-moz-document regexp("^moz-extension://.*?/sidebar/sidebar.html")
+{
+  #root {
+    --toolbar-bg: transparent !important;
+    --frame-bg: transparent !important;
+  }
+
+  :root {
+    background-color: transparent !important;
+  }
+
+  .NavigationBar .hidden-panels-popup {
+    --toolbar-bg: var(--s-toolbar-bg, #fafafa);
+  }
+}

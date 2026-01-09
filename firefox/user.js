@@ -1,0 +1,11 @@
+user_pref("browser.startup.page", 3);
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+user_pref("svg.context-properties.content.enabled", true);
+user_pref("layout.css.color-mix.enabled", true);
+user_pref("layout.css.light-dark.enabled", true);
+user_pref("layout.css.has-selector.enabled", true);
+user_pref("uc.tweak.hide-tabs-bar", true);
+user_pref("uc.tweak.rounded-corners", true);
+user_pref("af.edgyarc.centered-url", true);
+user_pref("af.sidebery.edgyarc-theme", true);
+user_pref("uc.tweak.hide-tabs-bar.always", true);
