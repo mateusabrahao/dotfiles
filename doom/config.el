@@ -85,24 +85,15 @@
                     "#+title: ${title}\n#+filetags: :books:\n#+author:\n")
          :unnarrowed t)))
 
-(setq org-roam-dailies-directory "daily/")
-
-(setq org-roam-dailies-capture-templates
-      '(("d" "daily" plain
-         "* meow\n- [ ] exercise\n- [ ] read\n- [ ] meditate\n- [ ] anki\n- [ ] write\n- [ ] skincare\n  - [ ] am\n  - [ ] pm\n- [ ] medicines\n"
-         :target (file+head "%<%Y-%m-%d>.org"
-                            "#+title: %<%Y-%m-%d>\n"))))
-
-(defun my-org-roam-set-created-if-not-daily ()
-  (unless (org-roam-dailies--daily-note-p)
-    (save-excursion
-      (goto-char (point-min))
-      (org-set-property
-       "CREATED"
-       (format-time-string "[%Y-%m-%d]")))))
+(defun my-org-roam-set-created ()
+  (save-excursion
+    (goto-char (point-min))
+    (org-set-property
+     "CREATED"
+     (format-time-string "[%Y-%m-%d]"))))
 
 (add-hook 'org-roam-capture-new-node-hook
-          #'my-org-roam-set-created-if-not-daily)
+          #'my-org-roam-set-created)
 
 (after! org
   (advice-add
