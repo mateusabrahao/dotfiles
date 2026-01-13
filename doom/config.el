@@ -125,6 +125,10 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
+;; Termux
+;;(when (eq system-type 'android)
+;;  (setq browse-url-browser-function #'browse-url-xdg-open))
+
 ;;(use-package vterm
 ;;  :ensure t
 ;;  :commands vterm)
