@@ -30,7 +30,8 @@ pkg install -y \
   aspell \
   aspell-en \
   nodejs \
-  curl
+  curl \
+  termux-api
 
 echo " > Setting up Termux font..."
 mkdir -p "$TERMUX_DIR"
