@@ -43,6 +43,8 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
+(setq default-directory "~/notes/")
+
 (setq org-directory "~/notes/org/")
 (setq org-roam-directory (file-truename "~/notes/roam/"))
 
