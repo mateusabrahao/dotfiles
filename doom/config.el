@@ -92,7 +92,7 @@
     (goto-char (point-min))
     (org-set-property
      "CREATED"
-     (format-time-string "[%Y-%m-%d]"))))
+     (format-time-string "[%Y-%m-%d %a %H:%M]"))))
 
 (add-hook 'org-roam-capture-new-node-hook
           #'my-org-roam-set-created)
