@@ -48,7 +48,6 @@ xorg-xprop
 xorg-xrandr
 xorg-xsetroot
 xss-lock
-zathura
 unzip
 zip
 syncthing
