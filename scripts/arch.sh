@@ -66,16 +66,16 @@ adjustment-method=randr
 ;screen=0
 EOF
 
-echo " > Setting up syncthing web shortcut..."
-mkdir -p ~/.local/bin
-tee ~/.local/bin/syncthing-web > /dev/null <<'EOF'
-#!/bin/bash
-firefox http://localhost:8384
-EOF
-chmod +x ~/.local/bin/syncthing-web
-if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
-    echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
-fi
+#echo " > Setting up syncthing web shortcut..."
+#mkdir -p ~/.local/bin
+#tee ~/.local/bin/syncthing-web > /dev/null <<'EOF'
+##!/bin/bash
+#firefox http://localhost:8384
+#EOF
+#chmod +x ~/.local/bin/syncthing-web
+#if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
+#    echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+#fi
 
 echo " > Setting up wallpaper and screenshots folder..."
 mkdir -p ~/Pictures/screenshots
