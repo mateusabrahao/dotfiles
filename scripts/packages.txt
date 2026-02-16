@@ -50,7 +50,6 @@ xorg-xsetroot
 xss-lock
 unzip
 zip
-syncthing
 ripgrep
 redshift
 tk
