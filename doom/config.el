@@ -71,31 +71,21 @@
 (setq org-roam-capture-templates
       '(("d" "default" plain "%?"
          :if-new
-         (file+head "${slug}.org"
+         (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                     "#+title: ${title}\n")
          :unnarrowed t)
 
         ("v" "video" plain "%?"
          :if-new
-         (file+head "${slug}.org"
+         (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                     "#+title: ${title}\n#+filetags: :videos:\n#+roam_refs:\n")
          :unnarrowed t)
 
         ("b" "book" plain "%?"
          :if-new
-         (file+head "${slug}.org"
+         (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                     "#+title: ${title}\n#+filetags: :books:\n#+author:\n")
          :unnarrowed t)))
-
-(defun my-org-roam-set-created ()
-  (save-excursion
-    (goto-char (point-min))
-    (org-set-property
-     "CREATED"
-     (format-time-string "[%Y-%m-%d %a %H:%M]"))))
-
-(add-hook 'org-roam-capture-new-node-hook
-          #'my-org-roam-set-created)
 
 (use-package! org-roam
   :bind (("C-c n l" . org-roam-buffer-toggle)
