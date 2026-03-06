@@ -97,14 +97,6 @@
 (add-hook 'org-roam-capture-new-node-hook
           #'my-org-roam-set-created)
 
-(after! org
-  (advice-add
-   'org-refile
-   :around
-   (lambda (orig-fn &rest args)
-     (let ((org-reverse-note-order t))
-       (apply orig-fn args)))))
-
 (use-package! org-roam
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
