@@ -87,6 +87,16 @@
                     "#+title: ${title}\n#+filetags: :books:\n#+author:\n")
          :unnarrowed t)))
 
+(defun my-org-roam-set-created ()
+  (save-excursion
+    (goto-char (point-min))
+    (org-set-property
+     "CREATED"
+     (format-time-string "[%Y-%m-%d %a %H:%M]"))))
+
+(add-hook 'org-roam-capture-new-node-hook
+          #'my-org-roam-set-created)
+
 (use-package! org-roam
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
