@@ -71,19 +71,19 @@
 (setq org-roam-capture-templates
       '(("d" "default" plain "%?"
          :if-new
-         (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+         (file+head "${slug}.org"
                     "#+title: ${title}\n")
          :unnarrowed t)
 
         ("v" "video" plain "%?"
          :if-new
-         (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+         (file+head "${slug}.org"
                     "#+title: ${title}\n#+filetags: :videos:\n#+roam_refs:\n")
          :unnarrowed t)
 
         ("b" "book" plain "%?"
          :if-new
-         (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+         (file+head "${slug}.org"
                     "#+title: ${title}\n#+filetags: :books:\n#+author:\n")
          :unnarrowed t)))
 
