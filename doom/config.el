@@ -113,15 +113,12 @@
 
 (use-package! org-roam-ui
   :after org-roam
+  :hook (org-roam-mode . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
-
-;; Termux
-;;(when (eq system-type 'android)
-;;  (setq browse-url-browser-function #'browse-url-xdg-open))
 
 ;;(use-package vterm
 ;;  :ensure t
@@ -134,6 +131,10 @@
  "q" (general-key-dispatch 'self-insert-command
        :timeout 0.25
        "q" 'toggle-input-method))
+
+;; termux
+;;(when (eq system-type 'android)
+;;  (setq browse-url-browser-function #'browse-url-xdg-open))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
