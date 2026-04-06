@@ -59,3 +59,4 @@ npm
 aspell
 aspell-en
 aspell-pt
+cmake
