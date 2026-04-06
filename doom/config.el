@@ -63,8 +63,7 @@
 ;;     (error "")))
 ;;
 (setq org-roam-node-display-template
-      (concat "${title:*} "
-              (propertize "${tags:10}" 'face 'org-tag)))
+      (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
 
 (setq org-roam-capture-templates
       '(("d" "default" plain "%?"
@@ -73,10 +72,10 @@
                     "#+title: ${title}\n")
          :unnarrowed t)
 
-        ("v" "video" plain "%?"
+        ("r" "roam_refs" plain "%?"
          :if-new
          (file+head "${slug}.org"
-                    "#+title: ${title}\n#+filetags: :videos:\n#+roam_refs:\n")
+                    "#+title: ${title}\n#+roam_refs:\n")
          :unnarrowed t)
 
         ("b" "book" plain "%?"
@@ -117,10 +116,6 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
-
-;;(use-package vterm
-;;  :ensure t
-;;  :commands vterm)
 
 (setq default-input-method "japanese")
 
