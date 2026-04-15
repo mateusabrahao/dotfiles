@@ -72,11 +72,11 @@
          :unnarrowed t)
         ("r" "reference" plain "%?"
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                    "#+title: ${title}\n#+roam_refs:\n")
+                    "#+title: ${title}\n#+filetags: :reference:\n#+roam_refs:\n")
          :unnarrowed t)
         ("b" "book" plain "%?"
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                    "#+title: ${title}\n#+filetags: :books:\n#+author:\n")
+                    "#+title: ${title}\n#+filetags: :reference:books:\n#+author:\n")
          :unnarrowed t)))
 
 (use-package! org-roam
