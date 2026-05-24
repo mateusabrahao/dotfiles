@@ -168,7 +168,7 @@ bindsym Print exec --no-startup-id flameshot gui
 exec_always setxkbmap -model abnt2 -layout br -variant abnt2
 
 # redshift
-exec --no-startup-id redshift &
+exec --no-startup-id redshift
 
 # Disable window titlebars entirely
 for_window [class="^.*"] border pixel 2
@@ -205,6 +205,7 @@ exec --no-startup-id xset -b
 exec --no-startup-id i3-msg 'workspace 1:Web; exec /usr/bin/firefox'
 
 exec --no-startup-id picom --config ~/.config/picom/picom.conf
+exec --no-startup-id dunst
 
 # media keys
 # bindsym F7 exec playerctl play-pause
