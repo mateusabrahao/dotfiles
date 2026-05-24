@@ -14,9 +14,10 @@ sudo pacman -Syu --noconfirm
 
 echo " > Installing official packages..."
 if [ -f packages.txt ]; then
-    sudo pacman -S --needed --noconfirm $(cat packages.txt)
+    sudo pacman -S --needed --noconfirm \
+    $(grep -vE '^\s*#|^\s*$' packages.txt | xargs)
 else
-    echo "   > WARNING: packages.txt not found -- skipping..."
+    echo "   > WARNING: packages.txt not found — skipping..."
 fi
 
 echo " > Checking for yay..."
@@ -24,31 +25,34 @@ if ! command -v yay &> /dev/null; then
     echo "   > Installing yay..."
     rm -rf yay
     git clone https://aur.archlinux.org/yay.git
-    cd yay
+    pushd yay >/dev/null
+    
     if ! makepkg -si --noconfirm --cleanbuild; then
         echo "   > ERROR: yay installation failed"
-        cd ..
+        popd >/dev/null
         rm -rf yay
         exit 1
     fi
-    cd ..
+    popd >/dev/null
     rm -rf yay
 fi
 
 echo " > Installing AUR packages..."
 if [ -f aur.txt ]; then
-    yay -S --needed --noconfirm $(cat aur.txt) || echo "   > WARNING: Some AUR packages failed to install"
+    yay -S --needed --noconfirm \
+    $(grep -vE '^\s*#|^\s*$' aur.txt | xargs) \
+    || echo "   > WARNING: Some AUR packages failed to install"
 else
-    echo "   > WARNING: aur.txt not found -- skipping..."
+    echo "   > WARNING: aur.txt not found — skipping..."
 fi
 
 echo " > Setting up configuration files..."
 mkdir -p ~/.config
-ln -sf "$DOTFILES_DIR/i3" ~/.config/i3
-ln -sf "$DOTFILES_DIR/kitty" ~/.config/kitty
-ln -sf "$DOTFILES_DIR/picom" ~/.config/picom
-ln -sf "$DOTFILES_DIR/dunst" ~/.config/dunst
-fc-cache -fv
+ln -sfn "$DOTFILES_DIR/i3" ~/.config/i3
+ln -sfn "$DOTFILES_DIR/kitty" ~/.config/kitty
+ln -sfn "$DOTFILES_DIR/picom" ~/.config/picom
+ln -sfn "$DOTFILES_DIR/dunst" ~/.config/dunst
+fc-cache -f
 mkdir -p ~/.config/redshift
 tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
 [redshift]
@@ -83,7 +87,7 @@ mkdir -p ~/Pictures/screenshots
 if [ -f "$DOTFILES_DIR/wallpapers/desktop2.jpg" ]; then
     cp "$DOTFILES_DIR/wallpapers/desktop2.jpg" "$HOME/Pictures/wallpaper.jpg"
 else
-    echo "   > WARNING: wallpapers/desktop2.jpg not found -- skipping..."
+    echo "   > WARNING: wallpapers/desktop2.jpg not found — skipping..."
 fi
 
 echo " > Setting up X session..."
@@ -121,11 +125,11 @@ edit_tlp_conf() {
 echo " > Optimizing disk power settings (tlp)..."
 mapfile -t hdds < <(lsblk -ndo NAME,TYPE,ROTA | awk '$2=="disk" && $3=="1" && $1 !~ /^nvme/ {print "/dev/"$1}')  
 if [ ${#hdds[@]} -eq 0 ]; then
-    echo "   > No SATA HDDs detected -- skipping..."
+    echo "   > No SATA HDDs detected — skipping..."
 else
     mapfile -t hosts < <(find /sys/class/scsi_host/ -maxdepth 1 -type l | sed 's|.*/||')
     if [ ${#hosts[@]} -eq 0 ]; then  
-        echo "   > No AHCI hosts detected -- skipping..."  
+        echo "   > No AHCI hosts detected — skipping..."  
     else  
         conf="/etc/tlp.conf"  
         if [ ! -f "$conf" ]; then
@@ -167,7 +171,7 @@ TLP_DEFAULTS="/usr/share/tlp/defaults.conf"
 mapfile -t batteries < <(ls /sys/class/power_supply/ 2>/dev/null | grep '^BAT' || true)
 
 if [ ${#batteries[@]} -eq 0 ]; then
-    echo "   > No batteries detected -- skipping..."
+    echo "   > No batteries detected — skipping..."
 else
     # detect supported batteries
     supported_batteries=()
@@ -177,12 +181,12 @@ else
            [ -w "/sys/class/power_supply/${bat}/charge_stop_threshold" ]; then
             supported_batteries+=("$bat")
         else
-            echo "   > WARNING: $bat does not support charge thresholds -- skipping..."
+            echo "   > WARNING: $bat does not support charge thresholds — skipping..."
         fi
     done
 
     if [ ${#supported_batteries[@]} -eq 0 ]; then
-        echo "   > WARNING: No batteries with charge threshold support detected -- skipping..."
+        echo "   > WARNING: No batteries with charge threshold support detected — skipping..."
     else
         # ensure tlp.conf exists
         if [ ! -f "$TLP_CONF" ]; then
