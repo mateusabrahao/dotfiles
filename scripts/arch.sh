@@ -47,14 +47,15 @@ mkdir -p ~/.config
 ln -sf "$DOTFILES_DIR/i3" ~/.config/i3
 ln -sf "$DOTFILES_DIR/kitty" ~/.config/kitty
 ln -sf "$DOTFILES_DIR/picom" ~/.config/picom
+ln -sf "$DOTFILES_DIR/dunst" ~/.config/dunst
 fc-cache -fv
 mkdir -p ~/.config/redshift
 tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
 [redshift]
-temp-day=4800
-temp-night=2900
+temp-day=3200
+temp-night=2200
 fade=0
-dawn-time=3:40-5:20
+dawn-time=4:00-5:30
 dusk-time=17:30-18:30
 brightness-day=1
 brightness-night=0.9
