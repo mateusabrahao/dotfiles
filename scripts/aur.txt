@@ -1,4 +1,3 @@
-twmn-git
 xautolock
 neofetch
 i3-battery-popup
