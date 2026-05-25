@@ -105,6 +105,31 @@ Section "InputClass"
 EndSection
 EOF
 
+echo " > Setting up battery notification daemon..."
+mkdir -p ~/.local/bin
+tee ~/.local/bin/battery-notify > /dev/null <<'EOF'
+#!/bin/bash
+
+THRESHOLD=20
+BAT_PATH="/sys/class/power_supply"
+
+while true; do
+    for bat in "$BAT_PATH"/BAT*; do
+        [ -e "$bat" ] || continue
+
+        capacity=$(cat "$bat/capacity" 2>/dev/null)
+        status=$(cat "$bat/status" 2>/dev/null)
+
+        if [ "$status" = "Discharging" ] && [ "$capacity" -le "$THRESHOLD" ]; then
+            notify-send -u critical "Battery Warning" "Battery is getting low! (${capacity}%)"
+            sleep 300
+        fi
+    done
+
+    sleep 60
+done
+EOF
+
 echo " > Enabling tlp power management service..."
 sudo systemctl enable tlp.service
 sudo systemctl start tlp.service
