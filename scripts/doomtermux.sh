@@ -16,7 +16,7 @@ if [ ! -d "$HOME/storage" ]; then
     echo " > Setting up Termux storage..."
     termux-setup-storage
 else
-    echo "   > Termux storage already set up -- skipping..."
+    echo "   > Termux storage already set up — skipping..."
 fi
 
 echo " > Installing required packages..."
@@ -44,21 +44,21 @@ if [ ! -d "$DOOM_DIR" ]; then
     echo " > Cloning Doom Emacs..."
     git clone --depth 1 https://github.com/doomemacs/doomemacs "$DOOM_DIR"
 else
-    echo "   > Doom Emacs already exists -- skipping..."
+    echo "   > Doom Emacs already exists — skipping..."
 fi
 
 if ! grep -q 'config/emacs/bin' "$BASHRC" 2>/dev/null; then
     echo " > Adding Doom to PATH..."
     echo 'export PATH="$HOME/.config/emacs/bin:$PATH"' >> "$BASHRC"
 else
-    echo "   > Doom already in PATH -- skipping..."
+    echo "   > Doom already in PATH — skipping..."
 fi
 
 if [ ! -d "$DOTFILES_DIR" ]; then
     echo " > Cloning dotfiles repository..."
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
 else
-    echo "   > Dotfiles repo already exists -- skipping..."
+    echo "   > Dotfiles repo already exists — skipping..."
     git -C "$DOTFILES_DIR" pull
 fi
 
@@ -73,7 +73,7 @@ for file in config.el init.el packages.el; do
         ln -sf "$SRC" "$DEST"
         echo "   > Linked $file"
     else
-        echo "   > WARNING: $SRC not found -- skipping..."
+        echo "   > WARNING: $SRC not found — skipping..."
     fi
 done
 
