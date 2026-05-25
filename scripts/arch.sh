@@ -130,6 +130,8 @@ while true; do
 done
 EOF
 
+chmod +x ~/.local/bin/battery-notify
+
 echo " > Enabling tlp power management service..."
 sudo systemctl enable tlp.service
 sudo systemctl start tlp.service
