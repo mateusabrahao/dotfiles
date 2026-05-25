@@ -511,3 +511,7 @@
 #    appname = "some_volume_notifiers"
 #    set_stack_tag = "volume"
 #
+
+[block-firefox-notifications]
+    appname = Firefox
+    skip_display = true
