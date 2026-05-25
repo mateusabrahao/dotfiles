@@ -121,7 +121,7 @@ while true; do
         status=$(cat "$bat/status" 2>/dev/null)
 
         if [ "$status" = "Discharging" ] && [ "$capacity" -le "$THRESHOLD" ]; then
-            notify-send -u critical "Battery Warning" "Battery is getting low! (${capacity}%)"
+            notify-send -u critical "Battery Warning" "Battery is getting low (${capacity}%)"
             sleep 300
         fi
     done
