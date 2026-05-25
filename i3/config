@@ -217,7 +217,7 @@ exec --no-startup-id dunst
 
 
 # battery notification
-exec --no-startup-id i3-battery-popup -L 20 -t 5m for_window [title="Battery Warning"] sticky enable
+exec --no-startup-id ~/.local/bin/battery-notify
 
 # autolock
 exec --no-startup-id xset s 600
