@@ -82,14 +82,6 @@ EOF
 #    echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
 #fi
 
-echo " > Setting up wallpaper and screenshots folder..."
-mkdir -p ~/Pictures/screenshots
-if [ -f "$DOTFILES_DIR/wallpapers/desktop2.jpg" ]; then
-    cp "$DOTFILES_DIR/wallpapers/desktop2.jpg" "$HOME/Pictures/wallpaper.jpg"
-else
-    echo "   > WARNING: wallpapers/desktop2.jpg not found — skipping..."
-fi
-
 echo " > Setting up X session..."
 echo "exec i3" > ~/.xinitrc
 
