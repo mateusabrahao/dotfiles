@@ -8,3 +8,4 @@ user_pref("uc.tweak.hide-tabs-bar", true);
 user_pref("af.edgyarc.centered-url", true);
 user_pref("af.sidebery.edgyarc-theme", true);
 user_pref("uc.tweak.hide-tabs-bar.always", true);
+user_pref("uc.tweak.rounded-corners", false);
