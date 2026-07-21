@@ -117,6 +117,22 @@
   (when (eq system-type 'android)
     (setq browse-url-browser-function #'browse-url-xdg-open)))
 
+(defun my/capture-today ()
+  (interactive)
+  (let* ((dir "~/notes/org/daily/")
+         (date (format-time-string "%Y-%m-%d"))
+         (file (expand-file-name (concat date ".org") dir)))
+    (unless (file-exists-p file)
+      (make-directory dir t)
+      (with-temp-file file
+        (insert (format "#+title: %s\n* meow\n- [ ] exercise\n- [ ] read\n- [ ] skincare\n  - [ ] am\n  - [ ] pm\n- [ ] medicines\n- [ ] creatine\n- [ ] water 3L\n" date))))
+    (find-file file)))
+
+(map! :leader
+      (:prefix ("i" . "insert")
+       :desc "Capture today"
+       "h" #'my/capture-today))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
