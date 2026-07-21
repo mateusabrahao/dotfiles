@@ -224,4 +224,4 @@ bindsym Shift+$mod+Pause exec i3lock -c 000000 && systemctl suspend
 bindsym $mod+Pause exec i3lock -c 000000
 
 exec_always --no-startup-id setxkbmap -model abnt2 -layout br -variant abnt2 -option ctrl:nocaps
-exec --no-startup-id blueman-applet
+# exec --no-startup-id blueman-applet
