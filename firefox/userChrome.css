@@ -1,0 +1,229 @@
+:root {
+  /*personal bar*/
+  --bookmark-block-padding: 6px !important;
+  --bookmark-inline-padding: 6px !important;
+  --bookmark-block-margin: 2px !important;
+  --bookmark-inline-margin: 2px !important;
+  --uc-bookmark-toolbar-padding-bottom: 2px;
+  
+  /*urlbar*/
+  --urlbar-container-padding: 2px !important;
+  --urlbar-icon-size: 15px !important;
+  --urlbar-icon-padding: calc(
+    (var(--urlbar-min-height) - 2px - 2 * var(--urlbar-container-padding) - var(--urlbar-icon-size)) / 2) !important;
+  
+  /*fix*/
+  --panel-separator-zap-gradient: none !important;
+}
+
+/*personal toolbar padding*/
+#PersonalToolbar {
+  padding-bottom: var(--uc-bookmark-toolbar-padding-bottom) !important;
+  padding-inline: calc(var(--toolbar-start-end-padding) - 2px) calc(var(--toolbar-start-end-padding) + 4px) !important;
+}
+
+/*bookmarks bar item sizing*/
+#personal-toolbar-empty-description,
+toolbarbutton.bookmark-item:not(.subviewbutton) {
+  margin-block: var(--bookmark-block-margin) !important;
+  margin-inline: var(--bookmark-inline-margin) !important;
+  padding-block: var(--bookmark-block-padding) !important;
+  padding-inline: var(--bookmark-inline-padding) !important;
+  font-size: 12px !important;
+}
+
+#PersonalToolbar .toolbarbutton-1 {
+  padding: 0 !important;
+}
+
+/*bookmarks bar separators*/
+#PlacesToolbarItems > toolbarseparator {
+  padding-inline: calc(3px - var(--bookmark-inline-margin)) !important;
+  align-items: center !important;
+}
+
+#PlacesToolbarItems > toolbarseparator::before {
+  content: "";
+  border-inline-start: 1px solid var(--toolbarseparator-color) !important;
+  height: 16px !important;
+  border-image: none !important;
+}
+
+/*fractional scaling adjustments (150%, 175%, etc)*/
+@media (1dppx < resolution < 2dppx) {
+  #PlacesToolbarItems > toolbarseparator::before {
+    border-inline-start-width: 1.5px !important;
+  }
+}
+
+/*spacing between icon and label for bookmarks bar items*/
+#managed-bookmarks > .toolbarbutton-icon,
+#bookmarks-toolbar-placeholder > .toolbarbutton-icon,
+#PlacesToolbarItems > .bookmark-item > .toolbarbutton-icon[label]:not([label=""]),
+#OtherBookmarks.bookmark-item[container] > .toolbarbutton-icon {
+  margin-inline-end: 8px !important;
+}
+
+/*sizing for bookmarks bar icons*/
+#PersonalToolbar .toolbarbutton-1 > .toolbarbutton-icon {
+  width: calc(2 * var(--bookmark-block-padding) + 16px) !important;
+  height: calc(2 * var(--bookmark-block-padding) + 16px) !important;
+  padding: var(--bookmark-block-padding) !important;
+}
+
+/*page actions*/
+.urlbar-page-action .urlbar-icon {
+  height: var(--urlbar-icon-size) !important;
+  width: var(--urlbar-icon-size) !important;
+}
+
+/*zoom level and tab container indicators*/
+#userContext-icons,
+#urlbar-zoom-button {
+  --uc-urlbar-icon-inline-padding: 8px !important;
+  max-height: 20px !important;
+  height: 20px !important;
+  padding: 4px 4px 4px 6px !important;
+  margin-inline: 3px !important;
+  font-size: 0.8em;
+  margin-block: calc((var(--urlbar-min-height) - 20px) / 2 - 1px /* border */ - var(--urlbar-container-padding));
+}
+
+#urlbar-zoom-button {
+  order: 98;
+}
+
+#userContext-icons {
+  order: 99;
+}
+
+#userContext-icons #userContext-indicator {
+  transform: scale(0.75) !important;
+}
+
+#identity-box,
+#tracking-protection-icon-container {
+  opacity: 0.7 !important;
+}
+
+#page-action-buttons .urlbar-page-action:not([open]) {
+  opacity: 0.7 !important;
+}
+
+#urlbar[breakout][breakout-extend] {
+  z-index: 600 !important;
+}
+
+#urlbar[breakout][breakout-extend] #urlbar-background {
+  opacity: 1 !important;
+}
+
+#urlbar[breakout][breakout-extend] #urlbar-background::before {
+  opacity: 0 !important;
+}
+
+.urlbar-input-box {
+  margin-top: -2px !important;
+}
+
+/*add padding to toolbar items*/
+.panel-no-padding {
+  padding: 2px !important;
+}
+
+@-moz-document url-prefix("chrome://") {
+  notification-message::before {
+    background-image: none !important;
+  }
+}
+
+#trustpanel-graphic-section {
+    display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+      --panel-border-color: #29292a !important;
+      --panel-background-color: #36363a !important;
+      --toolbar-field-background-color-focus: #36363a !important;
+      --sidebar-background-color: var(--toolbox-background-color) !important;
+  }
+
+  :root[dialogroot] {
+    --background-color-canvas: var(--panel-background-color) !important;
+  } 
+
+  notification-message {
+    --info-bar-background-color: var(--panel-background-color) !important;
+  }
+
+  #urlbar .urlbarView,
+  #urlbar #urlbar-results {
+    background-color: #36363a !important;
+  }
+
+  #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:hover:not([selected]) .tab-icon-overlay:is([soundplaying], [muted], [activemedia-blocked]) {
+      background-color: #34343a !important;
+      background-image: none !important;
+  }
+}
+
+.tabbrowser-tab[label$=".pdf"] .tab-icon-image, .tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-image, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-image, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-image, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-image, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-image, .tabbrowser-tab[label$=".svg"] .tab-icon-image {
+    display: none !important;
+}
+
+.tabbrowser-tab[label$=".pdf"] .tab-icon-stack, .tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-stack, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-stack, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-stack, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-stack, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-stack, .tabbrowser-tab[label$=".svg"] .tab-icon-stack {
+    margin-inline-end: 8px !important;
+    position: relative !important;
+}
+
+.tabbrowser-tab[label$=".pdf"][busy] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".png (PNG Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".jpg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".jpeg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".gif (GIF Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".webp (WEBP Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label$=".svg"] .tab-icon-stack::after {
+    display: none !important;
+}
+
+.tabbrowser-tab[label$=".pdf"] .tab-icon-stack::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+
+.tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-stack::after, .tabbrowser-tab[label$=".svg"] .tab-icon-stack::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .tabbrowser-tab[label$=".pdf"] .tab-icon-stack::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23b7b7b9' fill-rule='evenodd' clip-rule='evenodd' d='M7 0c.6 0 1 .4 1 1v4c0 .6.4 1 1 1h4c.6 0 1 .4 1 1v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h3zm6 4c.4.4.1 1-.4 1H10a1 1 0 0 1-1-1V1.4c0-.5.6-.8 1-.4l3 3zM5 8h6v1H5V8zm0 2h6v1H5v-1zm4 2H5v1h4v-1z'/%3E%3C/svg%3E");
+    }
+
+    .tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-stack::after, .tabbrowser-tab[label$=".svg"] .tab-icon-stack::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23b7b7b9' d='M7.07 6.89A1.5 1.5 0 115.93 4.1 1.5 1.5 0 017.07 6.9zM7.72 10.05L6.5 12H3l2.5-3.5 2.22 1.55zM10 7l3 5H7l3-5z'/%3E%3Cpath fill='%23b7b7b9' fill-rule='evenodd' clip-rule='evenodd' d='M1 2.5C1 1.67 1.67 1 2.5 1h11c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-11A1.5 1.5 0 011 13.5v-11zM13 2a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1h10z'/%3E%3C/svg%3E");
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .tabbrowser-tab[label$=".pdf"] .tab-icon-stack::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236e6e72' fill-rule='evenodd' clip-rule='evenodd' d='M7 0c.6 0 1 .4 1 1v4c0 .6.4 1 1 1h4c.6 0 1 .4 1 1v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h3zm6 4c.4.4.1 1-.4 1H10a1 1 0 0 1-1-1V1.4c0-.5.6-.8 1-.4l3 3zM5 8h6v1H5V8zm0 2h6v1H5v-1zm4 2H5v1h4v-1z'/%3E%3C/svg%3E");
+    }
+    
+    .tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-stack::after, .tabbrowser-tab[label$=".svg"] .tab-icon-stack::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236e6e72' d='M7.07 6.89A1.5 1.5 0 115.93 4.1 1.5 1.5 0 017.07 6.9zM7.72 10.05L6.5 12H3l2.5-3.5 2.22 1.55zM10 7l3 5H7l3-5z'/%3E%3Cpath fill='%236e6e72' fill-rule='evenodd' clip-rule='evenodd' d='M1 2.5C1 1.67 1.67 1 2.5 1h11c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-11A1.5 1.5 0 011 13.5v-11zM13 2a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1h10z'/%3E%3C/svg%3E");
+    }
+}
+
+.tabbrowser-tab[pending] .tab-icon-stack {
+  opacity: 0.48 !important;
+  transition: opacity 0.3s ease;
+}
+
+.tabbrowser-tab[pending] .tab-label {
+  opacity: 0.65 !important;
+}
