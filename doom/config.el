@@ -46,6 +46,8 @@
 (setq org-directory "~/notes/org/")
 (setq org-roam-directory (file-truename "~/notes/roam/"))
 (setq org-agenda-files (list org-directory))
+(setq org-id-locations-file "~/notes/roam/.orgids")
+(setq org-attach-id-dir "~/notes/roam/.attach/")
 
 (setq org-roam-file-extensions '("org"))
 
