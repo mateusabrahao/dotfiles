@@ -145,8 +145,7 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
   :root {
       --panel-border-color: #29292a !important;
       --panel-background-color: #36363a !important;
-      --toolbar-field-background-color-focus: #36363a !important;
-      --sidebar-background-color: var(--toolbox-background-color) !important;
+      --toolbar-field-background-color-focus: var(--panel-background-color) !important;
   }
 
   :root[dialogroot] {
@@ -159,64 +158,8 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
 
   #urlbar .urlbarView,
   #urlbar #urlbar-results {
-    background-color: #36363a !important;
+    background-color: var(--panel-background-color) !important;
   }
-
-  #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:hover:not([selected]) .tab-icon-overlay:is([soundplaying], [muted], [activemedia-blocked]) {
-      background-color: #34343a !important;
-      background-image: none !important;
-  }
-}
-
-.tabbrowser-tab[label$=".pdf"] .tab-icon-image, .tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-image, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-image, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-image, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-image, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-image, .tabbrowser-tab[label$=".svg"] .tab-icon-image {
-    display: none !important;
-}
-
-.tabbrowser-tab[label$=".pdf"] .tab-icon-stack, .tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-stack, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-stack, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-stack, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-stack, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-stack, .tabbrowser-tab[label$=".svg"] .tab-icon-stack {
-    margin-inline-end: 8px !important;
-    position: relative !important;
-}
-
-.tabbrowser-tab[label$=".pdf"][busy] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".png (PNG Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".jpg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".jpeg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".gif (GIF Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label*=".webp (WEBP Image,"] .tab-icon-stack::after, .tabbrowser-tab[busy][label$=".svg"] .tab-icon-stack::after {
-    display: none !important;
-}
-
-.tabbrowser-tab[label$=".pdf"] .tab-icon-stack::after {
-    content: "";
-    width: 16px;
-    height: 16px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 16px;
-}
-
-.tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-stack::after, .tabbrowser-tab[label$=".svg"] .tab-icon-stack::after {
-    content: "";
-    width: 16px;
-    height: 16px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 16px;
-}
-
-@media (prefers-color-scheme: dark) {
-    .tabbrowser-tab[label$=".pdf"] .tab-icon-stack::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23b7b7b9' fill-rule='evenodd' clip-rule='evenodd' d='M7 0c.6 0 1 .4 1 1v4c0 .6.4 1 1 1h4c.6 0 1 .4 1 1v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h3zm6 4c.4.4.1 1-.4 1H10a1 1 0 0 1-1-1V1.4c0-.5.6-.8 1-.4l3 3zM5 8h6v1H5V8zm0 2h6v1H5v-1zm4 2H5v1h4v-1z'/%3E%3C/svg%3E");
-    }
-
-    .tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-stack::after, .tabbrowser-tab[label$=".svg"] .tab-icon-stack::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23b7b7b9' d='M7.07 6.89A1.5 1.5 0 115.93 4.1 1.5 1.5 0 017.07 6.9zM7.72 10.05L6.5 12H3l2.5-3.5 2.22 1.55zM10 7l3 5H7l3-5z'/%3E%3Cpath fill='%23b7b7b9' fill-rule='evenodd' clip-rule='evenodd' d='M1 2.5C1 1.67 1.67 1 2.5 1h11c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-11A1.5 1.5 0 011 13.5v-11zM13 2a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1h10z'/%3E%3C/svg%3E");
-    }
-}
-
-@media (prefers-color-scheme: light) {
-    .tabbrowser-tab[label$=".pdf"] .tab-icon-stack::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236e6e72' fill-rule='evenodd' clip-rule='evenodd' d='M7 0c.6 0 1 .4 1 1v4c0 .6.4 1 1 1h4c.6 0 1 .4 1 1v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h3zm6 4c.4.4.1 1-.4 1H10a1 1 0 0 1-1-1V1.4c0-.5.6-.8 1-.4l3 3zM5 8h6v1H5V8zm0 2h6v1H5v-1zm4 2H5v1h4v-1z'/%3E%3C/svg%3E");
-    }
-    
-    .tabbrowser-tab[label*=".png (PNG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".jpeg (JPEG Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".gif (GIF Image,"] .tab-icon-stack::after, .tabbrowser-tab[label*=".webp (WEBP Image,"] .tab-icon-stack::after, .tabbrowser-tab[label$=".svg"] .tab-icon-stack::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236e6e72' d='M7.07 6.89A1.5 1.5 0 115.93 4.1 1.5 1.5 0 017.07 6.9zM7.72 10.05L6.5 12H3l2.5-3.5 2.22 1.55zM10 7l3 5H7l3-5z'/%3E%3Cpath fill='%236e6e72' fill-rule='evenodd' clip-rule='evenodd' d='M1 2.5C1 1.67 1.67 1 2.5 1h11c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-11A1.5 1.5 0 011 13.5v-11zM13 2a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1h10z'/%3E%3C/svg%3E");
-    }
 }
 
 .tabbrowser-tab[pending] .tab-icon-stack {
