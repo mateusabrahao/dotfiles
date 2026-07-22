@@ -125,7 +125,7 @@
     (unless (file-exists-p file)
       (make-directory dir t)
       (with-temp-file file
-        (insert (format "#+title: %s\n* meow\n- [ ] exercise\n- [ ] read\n- [ ] skincare\n  - [ ] am\n  - [ ] pm\n- [ ] medicines\n- [ ] creatine\n- [ ] water 3L\n" date))))
+        (insert (format "#+title: %s\n* meow\n- [ ] exercise\n- [ ] read" date))))
     (find-file file)))
 
 (map! :leader
