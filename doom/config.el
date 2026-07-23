@@ -45,7 +45,8 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/notes/org/")
 (setq org-roam-directory (file-truename "~/notes/roam/"))
-(setq org-agenda-files (list org-directory))
+(setq org-agenda-files '("~/notes/"))
+
 (setq org-id-locations-file "~/notes/roam/.orgids")
 (setq org-attach-id-dir "~/notes/roam/.attach/")
 
@@ -72,10 +73,6 @@
       '(("d" "default" plain "%?"
          :if-new (file+head "%<%Y%m%d>-${slug}.org"
                     "#+title: ${title}\n")
-         :unnarrowed t)
-        ("r" "reference" plain "%?"
-         :if-new (file+head "%<%Y%m%d>-${slug}.org"
-                    "#+title: ${title}\n#+roam_refs: \n")
          :unnarrowed t)
         ("b" "book" plain "%?"
          :if-new (file+head "%<%Y%m%d>-${slug}.org"
