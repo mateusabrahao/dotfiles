@@ -45,7 +45,7 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/notes/org/")
 (setq org-roam-directory (file-truename "~/notes/roam/"))
-(setq org-agenda-files '("~/notes/"))
+(setq org-agenda-files (list org-directory))
 
 (setq org-id-locations-file "~/notes/roam/.orgids")
 (setq org-attach-id-dir "~/notes/roam/.attach/")
