@@ -116,17 +116,24 @@
   (interactive)
   (let* ((dir "~/notes/org/daily/")
          (date (format-time-string "%Y-%m-%d"))
-         (file (expand-file-name (concat date ".org") dir)))
+         (file (expand-file-name (concat date ".org") dir))
+         (template (abbrev-expansion "today")))
     (unless (file-exists-p file)
       (make-directory dir t)
       (with-temp-file file
-        (insert (format "#+title: %s\n* meow\n- [ ] exercise\n- [ ] read" date))))
+        (insert (format "#+title: %s\n%s"
+                        date
+                        template))))
     (find-file file)))
 
 (map! :leader
-      (:prefix ("i" . "insert")
-       :desc "Capture today"
-       "h" #'my/capture-today))
+      :prefix ("i" . "insert")
+      :desc "Capture today"
+      "h" #'my/capture-today)
+
+;; daily note template:
+;; select the text you want to use as the template and run M-x add-global-abbrev, then name the global abbrev as "today"
+;; if you want to make changes to the template, edit ~/.config/emacs/abbrev_defs (that's where emacs will ask if you want to save when you exit the first time you set the abbrev)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
