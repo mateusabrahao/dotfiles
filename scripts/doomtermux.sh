@@ -20,14 +20,26 @@ pkg install -y \
   fd \
   clang \
   coreutils \
-  hunspell \
-  hunspell-en-us \
+  aspell \
+  aspell-en \
   nodejs \
   termux-api
 
+echo " > Setting up Aspell personal dictionary..."
+mkdir -p "$DOOM_DIR/.local/etc/ispell"
+if [ ! -f "$DOOM_DIR/.local/etc/ispell/.pws" ]; then
+    echo "personal_ws-1.1 en 0" > "$DOOM_DIR/.local/etc/ispell/.pws"
+else
+    echo "   > Aspell personal dictionary already exists — skipping..."
+fi
+
 echo " > Setting up Termux font..."
 mkdir -p "$TERMUX_DIR"
-curl -fL "$FONT_URL" -o "$TERMUX_DIR/font.ttf"
+if [ ! -f "$TERMUX_DIR/font.ttf" ]; then
+    curl -fL "$FONT_URL" -o "$TERMUX_DIR/font.ttf"
+else
+    echo "   > Font already exists — skipping..."
+fi
 if command -v termux-reload-settings &> /dev/null; then
     termux-reload-settings
 fi
