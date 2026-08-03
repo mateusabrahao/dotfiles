@@ -56,8 +56,8 @@ tk
 ttf-sourcecodepro-nerd
 fd
 npm
-hunspell
-hunspell-en_us
 cmake
 libnotify
 dunst
+aspell
+aspell-en
