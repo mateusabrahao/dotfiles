@@ -92,17 +92,17 @@ export XDG_CURRENT_DESKTOP=i3
 exec i3
 EOF
 
-echo " > Setting up touchpad..."
-touchpad_conf="/etc/X11/xorg.conf.d/30touchpad.conf"
-sudo mkdir -p "$(dirname "$touchpad_conf")"
-sudo tee "$touchpad_conf" > /dev/null <<'EOF'
-Section "InputClass"
-    Identifier "touchpad"
-    MatchIsTouchpad "on"
-    Driver "libinput"
-    Option "Tapping" "on"
-EndSection
-EOF
+#echo " > Setting up touchpad..."
+#touchpad_conf="/etc/X11/xorg.conf.d/30touchpad.conf"
+#sudo mkdir -p "$(dirname "$touchpad_conf")"
+#sudo tee "$touchpad_conf" > /dev/null <<'EOF'
+#Section "InputClass"
+#    Identifier "touchpad"
+#    MatchIsTouchpad "on"
+#    Driver "libinput"
+#    Option "Tapping" "on"
+#EndSection
+#EOF
 
 echo " > Setting up battery notification daemon..."
 mkdir -p ~/.local/bin
