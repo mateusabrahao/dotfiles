@@ -59,8 +59,8 @@ tee ~/.config/redshift/redshift.conf > /dev/null <<'EOF'
 temp-day=3200
 temp-night=2200
 fade=0
-dawn-time=4:00-5:00
-dusk-time=17:00-18:00
+dawn-time=4:00-6:00
+dusk-time=17:00-18:30
 brightness-day=1
 brightness-night=0.9
 gamma=1
