@@ -20,8 +20,8 @@ pkg install -y \
   fd \
   clang \
   coreutils \
-  aspell \
-  aspell-en \
+#  aspell \
+#  aspell-en \
   nodejs \
   termux-api
 
