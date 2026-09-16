@@ -135,17 +135,6 @@
             (interactive)
             (dired org-directory)))
 
-(after! flyspell
-  (setq ispell-dictionary "en_US,pt_BR")
-  (ispell-set-spellchecker-params)
-  (ispell-hunspell-add-multi-dic "en_US,pt_BR"))
-(with-eval-after-load 'flyspell
-  (defun my-flyspell-rule (&rest _args)
-    (let ((word (thing-at-point 'word 'no-properties)))
-      (when (and word (string-match-p "[0-9]" word))
-        t)))
-  (advice-add 'flyspell-word :before-until #'my-flyspell-rule))
-
 (after! org
   (setf (car org-todo-keywords) '(sequence "TODO(t)" "NEXT(n)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "DONE(d)" "KILL(k)"))
   (setf (nth 2 org-todo-keywords) nil))
