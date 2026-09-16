@@ -135,10 +135,6 @@
             (interactive)
             (dired org-directory)))
 
-(after! org
-  (setf (car org-todo-keywords) '(sequence "TODO(t)" "NEXT(n)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "DONE(d)" "KILL(k)"))
-  (setf (nth 2 org-todo-keywords) nil))
-
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
