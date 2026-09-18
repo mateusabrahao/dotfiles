@@ -203,7 +203,7 @@ exec --no-startup-id i3-msg 'workspace 1:Web; exec /usr/bin/firefox'
 
 exec --no-startup-id picom --config ~/.config/picom/picom.conf
 exec --no-startup-id dunst
-exec --no-startup-id blueman-applet
+# exec --no-startup-id blueman-applet
 
 # media keys
 # bindsym F7 exec playerctl play-pause
@@ -224,4 +224,4 @@ exec --no-startup-id xset s 600
 bindsym Shift+$mod+Pause exec i3lock -c 000000 && systemctl suspend
 bindsym $mod+Pause exec i3lock -c 000000
 
-exec_always --no-startup-id setxkbmap -model abnt2 -layout br -variant abnt2
+exec_always --no-startup-id setxkbmap -model abnt2 -layout br -variant abnt2 -option ctrl:nocaps
