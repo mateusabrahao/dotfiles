@@ -203,7 +203,7 @@ exec --no-startup-id i3-msg 'workspace 1:Web; exec /usr/bin/firefox'
 
 exec --no-startup-id picom --config ~/.config/picom/picom.conf
 exec --no-startup-id dunst
-# exec --no-startup-id blueman-applet
+exec --no-startup-id blueman-applet
 
 # media keys
 # bindsym F7 exec playerctl play-pause
