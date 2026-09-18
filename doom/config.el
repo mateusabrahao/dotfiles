@@ -135,6 +135,19 @@
             (interactive)
             (dired org-directory)))
 
+(after! flyspell
+  (setq ispell-dictionary "en_US,pt_BR"
+        ispell-personal-dictionary "~/.hunspell_pws")
+  (ispell-set-spellchecker-params)
+  (ispell-hunspell-add-multi-dic "en_US,pt_BR"))
+
+(with-eval-after-load 'flyspell
+  (defun my-flyspell-rule (&rest _args)
+    (let ((word (thing-at-point 'word 'no-properties)))
+      (when (and word (string-match-p "[0-9]" word))
+        t)))
+  (advice-add 'flyspell-word :before-until #'my-flyspell-rule))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
