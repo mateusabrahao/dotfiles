@@ -148,6 +148,11 @@
         t)))
   (advice-add 'flyspell-word :before-until #'my-flyspell-rule))
 
+(with-eval-after-load 'dired
+  (require 'dired-x)
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
+(add-hook 'dired-mode-hook 'dired-omit-mode)
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
