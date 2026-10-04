@@ -1,0 +1,13 @@
+@-moz-document url("about:newtab"), url("about:home") {
+  body {
+    background-color: var(--newtab-background-color)!important;
+  }
+
+  :root[lwt-newtab-brighttext] {
+    --newtab-background-color: #2b2a32 !important;
+  }
+
+  :root[lwt-newtab-brighttext] .search-wrapper content-search-handoff-ui {
+    --content-search-handoff-ui-background-color: #3b3a44 !important;
+  }
+}
