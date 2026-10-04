@@ -1,16 +1,11 @@
 :root {
-  /*personal bar*/
   --bookmark-block-padding: 6px !important;
   --bookmark-inline-padding: 6px !important;
   --bookmark-block-margin: 2px !important;
   --bookmark-inline-margin: 2px !important;
   --uc-bookmark-toolbar-padding-bottom: 2px;
-  
-  /*urlbar*/
   --urlbar-container-padding: 2px !important;
   --urlbar-icon-size: 15px !important;
-  
-  /**/
   --panel-separator-zap-gradient: none !important;
 }
 
@@ -21,17 +16,12 @@
 }
 
 /*bookmarks bar item sizing*/
-#personal-toolbar-empty-description,
-toolbarbutton.bookmark-item:not(.subviewbutton) {
+#personal-toolbar-empty-description, toolbarbutton.bookmark-item:not(.subviewbutton) {
   margin-block: var(--bookmark-block-margin) !important;
   margin-inline: var(--bookmark-inline-margin) !important;
   padding-block: var(--bookmark-block-padding) !important;
   padding-inline: var(--bookmark-inline-padding) !important;
   font-size: 12px !important;
-}
-
-#PersonalToolbar .toolbarbutton-1 {
-  padding: 0 !important;
 }
 
 /*bookmarks bar separators*/
@@ -69,6 +59,10 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
   padding: var(--bookmark-block-padding) !important;
 }
 
+#PersonalToolbar .toolbarbutton-1 {
+  padding: 0 !important;
+}
+
 /*page actions*/
 .urlbar-page-action .urlbar-icon {
   height: var(--urlbar-icon-size) !important;
@@ -76,8 +70,7 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
 }
 
 /*zoom level and tab container indicators*/
-#userContext-icons,
-#urlbar-zoom-button {
+#userContext-icons, #urlbar-zoom-button {
   --uc-urlbar-icon-inline-padding: 8px !important;
   max-height: 20px !important;
   height: 20px !important;
@@ -87,47 +80,12 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
   margin-block: calc((var(--urlbar-min-height) - 20px) / 2 - 1px /* border */ - var(--urlbar-container-padding));
 }
 
-#urlbar-zoom-button {
-  order: 98;
-}
-
-#userContext-icons {
-  order: 99;
-}
-
-#userContext-icons #userContext-indicator {
-  transform: scale(0.75) !important;
-}
-
-#identity-box,
-#tracking-protection-icon-container {
-  opacity: 0.7 !important;
-}
-
-#page-action-buttons .urlbar-page-action:not([open]) {
-  opacity: 0.7 !important;
-}
-
-#urlbar[breakout][breakout-extend] {
-  z-index: 600 !important;
-}
-
-#urlbar[breakout][breakout-extend] #urlbar-background {
-  opacity: 1 !important;
-}
-
-#urlbar[breakout][breakout-extend] #urlbar-background::before {
-  opacity: 0 !important;
-}
-
-.urlbar-input-box {
-  margin-top: -2px !important;
-}
-
 /*add padding to toolbar items*/
 .panel-no-padding {
   padding: 2px !important;
 }
+
+#urlbar-zoom-button { order: 98; } #userContext-icons { order: 99; } #userContext-icons #userContext-indicator { transform: scale(0.75) !important; } #identity-box, #tracking-protection-icon-container, #page-action-buttons .urlbar-page-action:not([open]) { opacity: 0.7 !important; } #urlbar[breakout][breakout-extend] { z-index: 600 !important; } #urlbar[breakout][breakout-extend] #urlbar-background { opacity: 1 !important; } #urlbar[breakout][breakout-extend] #urlbar-background::before { opacity: 0 !important; } .urlbar-input-box { margin-top: -2px !important; }
 
 @-moz-document url-prefix("chrome://") {
   notification-message::before {
@@ -144,6 +102,7 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
       --panel-border-color: #29292a !important;
       --panel-background-color: #36363a !important;
       --toolbar-field-background-color-focus: var(--panel-background-color) !important;
+      --chrome-content-separator-color: var(--toolbox-background-color) !important;
   }
 
   :root[dialogroot] {
@@ -154,17 +113,21 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
     --info-bar-background-color: var(--panel-background-color) !important;
   }
 
-  #urlbar .urlbarView,
-  #urlbar #urlbar-results {
+  #urlbar .urlbarView, #urlbar #urlbar-results {
     background-color: var(--panel-background-color) !important;
   }
 }
 
+#main-window:has(#tabbrowser-tabs[orient="vertical"]) .browser-toolbar:not(.browser-titlebar) {
+  --toolbar-background-color: var(--toolbox-background-color) !important;
+  background-color: var(--toolbox-background-color) !important;
+}
+
+/*fade out unloaded firefox native tabs*/
 .tabbrowser-tab[pending] .tab-icon-stack {
   opacity: 0.48 !important;
   transition: opacity 0.3s ease;
 }
-
 .tabbrowser-tab[pending] .tab-label {
   opacity: 0.65 !important;
 }
