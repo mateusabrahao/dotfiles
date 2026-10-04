@@ -7,6 +7,7 @@
   --urlbar-container-padding: 2px !important;
   --urlbar-icon-size: 15px !important;
   --panel-separator-zap-gradient: none !important;
+  --sidebar-divider-size: 1px 1px, 1px 1px, 14px 1px !important;
 }
 
 /*personal toolbar padding*/
@@ -97,12 +98,19 @@
     display: none !important;
 }
 
+@media (prefers-color-scheme: light) {
+    :root {
+        --sidebar-divider-color: #bebec1 !important;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
       --panel-border-color: #29292a !important;
       --panel-background-color: #36363a !important;
       --toolbar-field-background-color-focus: var(--panel-background-color) !important;
       --chrome-content-separator-color: var(--toolbox-background-color) !important;
+      --sidebar-divider-color: #504f55 !important;
   }
 
   :root[dialogroot] {
@@ -131,3 +139,4 @@
 .tabbrowser-tab[pending] .tab-label {
   opacity: 0.65 !important;
 }
+
