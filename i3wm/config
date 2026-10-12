@@ -214,7 +214,7 @@ exec --no-startup-id dunst
 
 
 # battery notification
-exec --no-startup-id ~/.local/bin/battery-notify
+exec --no-startup-id ~/.local/bin/battery-notification
 
 # autolock
 exec --no-startup-id xset s 600
