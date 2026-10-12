@@ -1,0 +1,263 @@
+@-moz-document url("about:newtab"), url("about:home"), url("about:blank") {
+    @media (prefers-color-scheme: dark) {
+        html, body {
+          background-color: #2b2a32 !important;
+        }
+
+        .search-wrapper content-search-handoff-ui {
+          --content-search-handoff-ui-background-color: #3b3a44 !important;
+        }
+    }
+}
+
+/*--- SIDEBERY ---*/
+@-moz-document regexp("^moz-extension://.*?/sidebar/sidebar.html") {
+  /*loading animation*/  
+  @keyframes fx-dot-bounce {
+    0% {
+      transform: translateX(0px) scale(0.85);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateX(11px) scale(1.15);
+      opacity: 1;
+    }
+  }
+
+  /*sidebar background color*/
+  html, body, #root.root {
+      --frame-bg: light-dark(#ebebed, #1c1b22) !important;
+      --s-frame-bg: var(--frame-bg) !important;
+      --toolbar-bg: var(--frame-bg) !important;
+      --s-toolbar-bg: var(--frame-bg) !important;
+      background-color: var(--frame-bg) !important;
+  }
+
+  /*root*/ 
+  #root.root {
+    --tabs-margin: 8px !important;
+    --ntb-btn-height: 32px !important;
+    --tabs-border-radius: 8px !important;
+    --general-border-radius: 8px !important;
+    --tabs-inner-gap: 6px !important;
+    --tabs-activated-bg: light-dark(#ffffff, #52525e) !important;
+    --frame-el-overlay-hover-bg: light-dark(#d6d6d9, #35343a) !important;
+    --badge-urgent-bg: light-dark(#3584e4, #54ffbd) !important;
+    --frame-el-overlay-clicked-bg: var(--frame-el-overlay-hover-bg) !important;
+
+    /*close tab button colors*/
+    .Tab:not([data-active="true"]) .close:hover {
+        background-color: light-dark(#bababe, #535259) !important;
+    }
+
+    .Tab:not([data-active="true"]) .close:active {
+        background-color: light-dark(#a3a3a7, #737279) !important;
+    }
+
+    .Tab[data-active="true"] .close:hover {
+        background-color: light-dark(#dcdcdd, #6b6a76) !important;
+    }
+
+    .Tab[data-active="true"] .close:active {
+        background-color: light-dark(#c1c1c3, #84848e) !important;
+    }
+
+    .Tab[data-active="true"]:has(.close:active) {
+        --frame-el-overlay-clicked-bg: transparent !important;
+    }
+
+    /*container indicator*/
+    .Tab .ctx {
+        height: 75% !important;
+        top: auto !important;
+    }
+ 
+    /*audio badge*/
+    .Tab .t-box {
+        --audio-btn-offset: 0px !important;
+    }
+
+    .Tab .audio {
+        margin-left: 5px !important;
+        top: 8px !important;
+        left: 12px !important;
+        width: 12px !important;
+    }
+
+    .Tab .audio-icon {
+        border-radius: 50% !important;
+        width: 12px !important;
+        height: 12px !important;
+        box-sizing: border-box !important;
+    }
+
+    .Tab[data-active="true"] .audio-icon {
+        background-color: var(--tabs-activated-bg) !important;
+    }
+
+    .Tab[data-active="false"] .audio-icon,
+    .Tab:not([data-active="true"]) .audio-icon {
+        background-color: var(--frame-el-overlay-hover-bg) !important;
+    }
+
+    .Tab:not([data-active="true"]):not(:hover) .audio-icon {
+        background-color: var(--frame-bg) !important;
+    }
+
+    /*new tab icon*/
+    .Tab:not([data-loading="true"]) .fav:has(> svg.fav-icon use[href="#icon_ff"]):not(:has(> img.fav-icon[src]:not([src=""]))) {
+        background-image: url("chrome://branding/content/icon32.png") !important;
+        background-size: 16px !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
+    }
+
+    .Tab:not([data-loading="true"]) .fav:has(> svg.fav-icon use[href="#icon_ff"]):not(:has(> img.fav-icon[src]:not([src=""]))) > svg.fav-icon {
+        display: none !important;
+    }
+
+    /*loading animation*/
+    .Tab[data-loading="true"] .fav-icon, .Tab[data-loading="true"] .progress-spinner, .Tab[data-loading="true"] .pending-mark {
+        display: none !important;
+    }
+
+    .Tab[data-loading="true"] .fav {
+        position: relative !important;
+        width: 16px !important;
+        height: 16px !important;
+        background: transparent !important;
+        background-image: none !important;
+    }
+
+    .Tab[data-loading="true"] .fav::before {
+        content: "" !important;
+        position: absolute !important;
+        top: 6px !important;
+        left: 0px !important;
+        width: 4px !important;
+        height: 4px !important;
+        border-radius: 50% !important;
+        background-color: currentColor !important;
+        animation: fx-dot-bounce 0.55s ease-in-out infinite alternate !important;
+    }
+
+    /*horizontal tab margin*/
+    .scrollable .Tab {
+        margin-left: 11px !important;
+        margin-right: 11px !important;
+        width: calc(100% - 22px) !important;
+    }
+
+    /*new tab button styling*/
+    .TabsPanel .new-tab-btns .new-tab-btn {
+        --frame-el-overlay-clicked-bg: var(--frame-el-overlay-hover-bg) !important;
+    }
+
+    .TabsPanel .new-tab-btns {
+
+      & .new-tab-btn {
+          margin-left: 7px !important;
+          margin-right: 7px !important;
+          justify-content: start !important;
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          border-radius: var(--tabs-border-radius) !important;
+          padding-left: 0 !important;
+
+          & > svg,
+          & > img {
+              position: static !important;
+              width: 16px !important;
+              height: 16px !important;
+              flex-shrink: 0 !important;
+              margin: 0 6px 0 9px !important;
+              fill: transparent !important;
+              background-color: currentColor !important;
+              mask: url("chrome://global/skin/icons/plus.svg") center / contain no-repeat !important;
+          }
+
+          &::after {
+              content: "New Tab" !important;
+              position: relative !important;
+              z-index: 10 !important;
+              font: var(--tabs-font) !important;
+              color: var(--frame-fg) !important;
+          }
+      }
+    }
+
+    /*navigation box*/
+    .top-horizontal-box {
+        display: flex;
+        order: 3 !important;
+        margin-bottom: 6px !important;
+
+      & #nav_bar[data-layout="wrap"] .main-items {
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: hidden !important;
+      }
+      & #nav_bar .main-items {
+        padding: 0px !important;
+        margin: 0px !important;
+      }
+
+      #nav_bar {
+        background-color: transparent !important;
+      }
+    }
+
+    /*pinned tabs */
+    .PinnedTabsBar {
+        display: flex !important;
+        flex-direction: column !important;
+        flex-wrap: nowrap !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 6px !important;
+    }
+
+    .PinnedTabsBar::after {
+        display: none !important;
+    }
+
+    .PinnedTabsBar .Tab:not([data-active="true"]):not(:hover) .body {
+        background-color: light-dark(#dddde0, #2c2b32) !important;
+    }
+
+    .PinnedTabsBar .tab-wrapper {
+        margin-left: 3px !important;
+        margin-right: 3px !important;
+        width: calc(100% - 6px) !important;
+    }
+
+    @media (max-width: 160px) {
+        .PinnedTabsBar .tab-wrapper {
+            width: 48px !important;
+        }
+    }
+
+    /*collapsed sidebar*/
+    @media (max-width: 160px) {
+      --tabs-indent: 0 !important;
+      --tabs-lvl-opacity: 0 !important;
+      --nav-btn-width: 32px !important;
+      --nav-btn-height: 32px !important;
+
+      width: 100vw !important;
+      max-width: 280px !important;
+      overflow: hidden !important;
+      white-space: nowrap !important;
+
+      .Tab .t-box, .close, .nav-item[data-active="false"], .top-horizontal-box:has(#nav_bar[data-layout="inline"]), .top-horizontal-box .nav-item:not([data-class="panel"]), .new-tab-btn::after {
+        display: none !important;
+      }
+
+      .scrollable .Tab {
+          width: 32px !important;
+      }
+    }
+  }
+}
+
