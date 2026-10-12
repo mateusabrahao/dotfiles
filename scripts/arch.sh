@@ -107,30 +107,44 @@ EOF
 
 echo " > Setting up battery notification..."
 mkdir -p ~/.local/bin
-tee ~/.local/bin/battery-notify > /dev/null <<'EOF'
+tee ~/.local/bin/battery-notification > /dev/null <<'EOF'
 #!/bin/bash
 
-THRESHOLD=20
 BAT_PATH="/sys/class/power_supply"
+THRESHOLD=20
+notified=0
 
 while true; do
     for bat in "$BAT_PATH"/BAT*; do
-        [ -e "$bat" ] || continue
+        [ -d "$bat" ] || continue
 
-        capacity=$(cat "$bat/capacity" 2>/dev/null)
-        status=$(cat "$bat/status" 2>/dev/null)
+        capacity=$(cat "$bat/capacity" 2>/dev/null) || continue
+        status=$(cat "$bat/status" 2>/dev/null) || continue
 
-        if [ "$status" = "Discharging" ] && [ "$capacity" -le "$THRESHOLD" ]; then
-            notify-send -u critical "Battery Warning" "Battery is getting low (${capacity}%)"
-            sleep 300
+        case "$capacity" in
+            ''|*[!0-9]*) continue ;;
+        esac
+
+        if [ "$status" = "Discharging" ] &&
+           [ "$capacity" -le "$THRESHOLD" ] &&
+           [ "$notified" -eq 0 ]; then
+            notify-send -u critical \
+                "Battery Warning" \
+                "Battery is getting low (${capacity}%)"
+            notified=1
+        fi
+
+        if [ "$status" = "Charging" ] ||
+           [ "$capacity" -gt "$THRESHOLD" ]; then
+            notified=0
         fi
     done
 
-    sleep 60
+    sleep 30
 done
 EOF
 
-chmod +x ~/.local/bin/battery-notify
+chmod +x ~/.local/bin/battery-notification
 
 echo " > Configuring SSD TRIM..."
 
