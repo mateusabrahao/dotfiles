@@ -145,18 +145,12 @@
             (interactive)
             (dired org-directory)))
 
-(after! flyspell
-  (setq ispell-dictionary "en_US,pt_BR"
-        ispell-personal-dictionary "~/.hunspell_pws")
-  (ispell-set-spellchecker-params)
-  (ispell-hunspell-add-multi-dic "en_US,pt_BR"))
-
-(with-eval-after-load 'flyspell
-  (defun my-flyspell-rule (&rest _args)
-    (let ((word (thing-at-point 'word 'no-properties)))
-      (when (and word (string-match-p "[0-9]" word))
-        t)))
-  (advice-add 'flyspell-word :before-until #'my-flyspell-rule))
+(use-package! jinx
+  :hook (doom-first-buffer . global-jinx-mode)
+  :bind (("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages))
+  :config
+  (setq jinx-languages "pt_BR en_US"))
 
 (with-eval-after-load 'dired
   (require 'dired-x)
