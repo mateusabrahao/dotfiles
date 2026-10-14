@@ -49,6 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! jinx)
 (package! org-appear)
 (package! pangu-spacing)
 (package! org-roam-ui
