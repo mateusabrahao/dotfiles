@@ -112,6 +112,16 @@
   (when (eq system-type 'android)
     (setq browse-url-browser-function #'browse-url-xdg-open)))
 
+(after! org
+  (setq org-hide-emphasis-markers t))
+
+(use-package! org-appear
+  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autoemphasis t
+        org-appear-autolinks t
+        org-appear-autosubmarkers t))
+
 (defun my/capture-today ()
   (interactive)
   (let* ((dir "~/notes/org/daily/")
