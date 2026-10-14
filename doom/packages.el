@@ -49,7 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-;;(package! org-alert)
+(package! org-appear)
 (package! pangu-spacing)
 (package! org-roam-ui
   :recipe (:host github :repo "org-roam/org-roam-ui"))
