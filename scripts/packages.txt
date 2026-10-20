@@ -59,3 +59,7 @@ npm
 cmake
 dunst
 libnotify
+
+#for neovim:
+#tree-sitter-cli
+#typescript-language-server
