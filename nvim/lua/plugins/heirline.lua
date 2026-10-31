@@ -193,43 +193,34 @@ return {
     -- branch indicator
     local function update_git_status(bufnr)
       local file = vim.api.nvim_buf_get_name(bufnr)
-      if file == "" or vim.bo[bufnr].buftype ~= "" then
+      if file == "" then
         vim.b[bufnr].statusline_git_tracked = false
         return
       end
 
       local dir = vim.fn.fnamemodify(file, ":h")
-      local name = vim.fn.fnamemodify(file, ":t")
-
-      local root = vim.fn.systemlist({
-        "git", "-C", dir, "rev-parse", "--show-toplevel"
-      })
+      local root = vim.fn.systemlist({ "git", "-C", dir, "rev-parse", "--show-toplevel" })
 
       if vim.v.shell_error ~= 0 or not root[1] then
         vim.b[bufnr].statusline_git_tracked = false
         return
       end
 
-      vim.fn.systemlist({
-        "git", "-C", dir, "ls-files", "--error-unmatch", "--", name
-      })
-
-      if vim.v.shell_error ~= 0 then
-        vim.b[bufnr].statusline_git_tracked = false
-        return
-      end
-
-      local branch = vim.fn.systemlist({
-        "git", "-C", dir, "rev-parse", "--abbrev-ref", "HEAD"
-      })
-
-      local status = vim.fn.systemlist({
-        "git", "-C", dir, "status", "--porcelain", "--", name
-      })
+      local branch = vim.fn.systemlist({ "git", "-C", dir, "rev-parse", "--abbrev-ref", "HEAD" })
+      local status = vim.fn.systemlist({ "git", "-C", dir, "status", "--porcelain" })
 
       vim.b[bufnr].statusline_git_tracked = true
       vim.b[bufnr].statusline_git_head = branch[1] or ""
       vim.b[bufnr].statusline_git_dirty = #status > 0
+
+      local has_conflict = false
+      for _, line in ipairs(status) do
+        if line:match("^UU") or line:match("^AA") or line:match("^DD") or line:match("^UD") or line:match("^DU") then
+          has_conflict = true
+          break
+        end
+      end
+      vim.b[bufnr].statusline_git_conflict = has_conflict
     end
 
     vim.api.nvim_create_autocmd(
@@ -244,14 +235,25 @@ return {
 
     update_git_status(0)
 
-    local GitBranch = {
+local GitBranch = {
       hl = { fg = "branch", bold = true },
       condition = function()
         return vim.b.statusline_git_tracked == true
       end,
       provider = function()
-        local icon = vim.b.statusline_git_dirty and "" or ""
-        return " " .. icon .. " " .. (vim.b.statusline_git_head or "") .. " "
+        local is_dirty = vim.b.statusline_git_dirty
+        local has_conflict = vim.b.statusline_git_conflict
+        
+        local icon = ""
+        if has_conflict then
+          icon = "󰀪"
+        elseif is_dirty then
+          icon = ""
+        end
+
+        local branch_name = vim.b.statusline_git_head or ""
+        
+        return " " .. icon .. " " .. branch_name .. " "
       end,
     }
 
