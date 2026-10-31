@@ -235,26 +235,31 @@ return {
 
     update_git_status(0)
 
-local GitBranch = {
-      hl = { fg = "branch", bold = true },
-      condition = function()
-        return vim.b.statusline_git_tracked == true
-      end,
-      provider = function()
-        local is_dirty = vim.b.statusline_git_dirty
-        local has_conflict = vim.b.statusline_git_conflict
-        
-        local icon = ""
-        if has_conflict then
-          icon = "󰀪"
-        elseif is_dirty then
-          icon = ""
-        end
+    local GitBranch = {
+        hl = function()
+            if vim.b.statusline_git_conflict then
+                return { fg = "insert", bold = true }
+            end
+            return { fg = "branch", bold = true }
+        end,
+        condition = function()
+            return vim.b.statusline_git_tracked == true
+        end,
+        provider = function()
+            local is_dirty = vim.b.statusline_git_dirty
+            local has_conflict = vim.b.statusline_git_conflict
+            
+            local icon = ""
+            if has_conflict then
+                icon = "󰀪"
+            elseif is_dirty then
+                icon = ""
+            end
 
-        local branch_name = vim.b.statusline_git_head or ""
-        
-        return " " .. icon .. " " .. branch_name .. " "
-      end,
+            local branch_name = vim.b.statusline_git_head or ""
+            
+            return " " .. icon .. " " .. branch_name .. " "
+        end,
     }
 
     local GitDiff = {
