@@ -450,13 +450,13 @@ return {
         local os_name, icon
         
         if ff == "unix" then
-          os_name = "UNIX "
+          os_name = "unix "
           icon = "   "
         elseif ff == "mac" then
-          os_name = "MAC "
+          os_name = "mac "
           icon = "   "
         else
-          os_name = "WIN "
+          os_name = "win "
           icon = "   "
         end
         
