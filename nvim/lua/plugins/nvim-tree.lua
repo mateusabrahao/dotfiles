@@ -22,7 +22,7 @@ return {
               icons = {
                   show = {
                       git = false,
-                      file = true,
+                      file = false,
                       folder = false,
                       folder_arrow = true,
                   },
@@ -39,7 +39,7 @@ return {
           },
         })
 
-        vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "#242424" })
-        vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = "#242424" })
+        vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "#262626" })
+        vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = "#262626" })
     end
 }

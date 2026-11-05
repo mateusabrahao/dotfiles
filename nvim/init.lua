@@ -17,6 +17,12 @@ require("lazy").setup("plugins")
 
 vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme gruvbox]])
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "#282828" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#282828" })
+vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#3c3836" })
+
+-- barbar plugin
+vim.api.nvim_set_hl(0, "BufferCurrent", { fg = "#ebdbb2" })
 
 vim.api.nvim_create_autocmd("ModeChanged", {
   pattern = "*:*",
@@ -40,6 +46,25 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.api.nvim_set_hl(0, "ModeMsg", { fg = "#ebdbb2", bold = false })
+
+-- file
+vim.keymap.set('n', '<leader>fs', '<cmd>write<CR>', { desc = 'Save file' })
+
+-- buffer
+vim.keymap.set('n', '<leader>bn', '<cmd>bnext<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>bp', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
+vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Kill buffer' })
+
+-- window management
+vim.keymap.set('n', '<leader>wv', '<cmd>vsplit<CR>', { desc = 'Split window vertically' })
+vim.keymap.set('n', '<leader>ws', '<cmd>split<CR>', { desc = 'Split window' })
+vim.keymap.set('n', '<leader>ww', '<C-w>w', { desc = 'Switch window' })
+vim.keymap.set('n', '<leader>wq', '<cmd>quit<CR>', { desc = 'Close window' })
+vim.keymap.set('n', '<leader>wh', '<C-w>h', { desc = 'Go to left window' })
+vim.keymap.set('n', '<leader>wj', '<C-w>j', { desc = 'Go to bottom window' })
+vim.keymap.set('n', '<leader>wk', '<C-w>k', { desc = 'Go to top window' })
+vim.keymap.set('n', '<leader>wl', '<C-w>l', { desc = 'Go to right window' })
+vim.keymap.set('n', '<leader>wT', '<C-w>T', { desc = 'Move window to new tab' })
 
 -- nvim-tree binds 
 vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
