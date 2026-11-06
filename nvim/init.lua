@@ -54,6 +54,10 @@ vim.keymap.set('n', '<leader>fs', '<cmd>write<CR>', { desc = 'Save file' })
 vim.keymap.set('n', '<leader>bn', '<cmd>bnext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader>bp', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Kill buffer' })
+vim.keymap.set('n', '<leader>by', '<cmd>%yank +<CR>', { desc = 'Yank buffer' })
+for i = 1, 9 do
+    vim.keymap.set('n', '<leader>' .. i, '<cmd>BufferGoto ' .. i .. '<CR>', { silent = true, desc = 'which_key_ignore' })
+end
 
 -- window management
 vim.keymap.set('n', '<leader>wv', '<cmd>vsplit<CR>', { desc = 'Split window vertically' })
