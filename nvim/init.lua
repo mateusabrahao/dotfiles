@@ -38,6 +38,7 @@ vim.api.nvim_create_autocmd("User", {
     vim.cmd("redrawstatus")
   end,
 })
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.opt.showcmd = false
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.number = true
