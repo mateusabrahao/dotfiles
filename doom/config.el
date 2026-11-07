@@ -34,16 +34,13 @@
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 12))
 (setq doom-theme 'doom-gruvbox)
 
-(custom-set-faces!
-  '(default :background "#242424"))
-
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/notes/org/")
+(setq org-directory "~/notes/")
 (setq org-roam-directory (file-truename "~/notes/roam/"))
 (setq org-agenda-files (list org-directory))
 
@@ -124,7 +121,7 @@
 
 (defun my/capture-today ()
   (interactive)
-  (let* ((dir "~/notes/org/daily/")
+  (let* ((dir "~/notes/daily/")
          (date (format-time-string "%Y-%m-%d"))
          (file (expand-file-name (concat date ".org") dir))
          (template (abbrev-expansion "today")))
@@ -150,7 +147,7 @@
   :bind (("M-$" . jinx-correct)
          ("C-M-$" . jinx-languages))
   :config
-  (setq jinx-languages "pt_BR en_US"))
+  (setq jinx-languages "en_US pt_BR"))
 
 (with-eval-after-load 'dired
   (require 'dired-x)
