@@ -18,7 +18,6 @@ require("lazy").setup("plugins")
 vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme gruvbox]])
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "#282828" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#282828" })
 vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#3c3836" })
 
 -- barbar plugin
