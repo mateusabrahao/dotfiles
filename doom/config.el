@@ -31,7 +31,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 12))
+(setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 14))
 (setq doom-theme 'doom-gruvbox)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -153,6 +153,70 @@
   (require 'dired-x)
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$")))
 (add-hook 'dired-mode-hook 'dired-omit-mode)
+
+; pushes the dashboard further away (useful only if the font size is 13 or larger, since anything bigger than that kinda causes the dashboard to no longer fit on the screen)
+(defun my/doom-dashboard-font-size ()
+  (face-remap-add-relative 'default :height 90)
+  (face-remap-add-relative 'doom-dashboard-banner :height 90))
+(add-hook '+doom-dashboard-mode-hook
+          #'my/doom-dashboard-font-size)
+
+(defun my/doom-dashboard-fix-centering (&rest _)
+  (when-let ((win (get-buffer-window +doom-dashboard-name)))
+    (with-current-buffer (window-buffer win)
+      (let* ((char-width (frame-char-width (window-frame win)))
+             (margins (window-margins win))
+             (left (or (car margins) 0))
+             (right (or (cdr margins) 0))
+             (body-width (window-body-width win t))
+             (available-width
+              (+ body-width (* (+ left right) char-width)))
+             (text-width
+              (car (window-text-pixel-size
+                    win (point-min) (point-max))))
+             (new-margin
+              (max 0
+                   (round (/ (- available-width text-width)
+                             (* 2.0 char-width))))))
+        (set-window-margins win new-margin 0)))))
+
+(advice-remove '+doom-dashboard-resize-h
+               #'my/doom-dashboard-fix-centering)
+
+(advice-add '+doom-dashboard-resize-h
+            :after
+            #'my/doom-dashboard-fix-centering)
+
+(defun my/doom-dashboard-fix-vertical-centering (&rest _)
+  (when-let ((win (get-buffer-window +doom-dashboard-name)))
+    (with-current-buffer (window-buffer win)
+      (let ((inhibit-read-only t))
+        (save-excursion
+          (goto-char (point-min))
+          (delete-region
+           (point-min)
+           (progn
+             (skip-chars-forward "\n")
+             (point)))
+
+          (let* ((body-height (window-body-height win t))
+                 (content-height
+                  (cdr (window-text-pixel-size
+                        win (point-min) (point-max))))
+                 (line-height
+                  (frame-char-height (window-frame win)))
+                 (top-padding
+                  (+ (car +doom-dashboard-banner-padding)
+                     (max 0
+                          (round
+                           (/ (- body-height content-height)
+                              (* 2.0 line-height)))))))
+            (goto-char (point-min))
+            (insert (make-string top-padding ?\n))))))))
+
+(advice-add '+doom-dashboard-resize-h
+            :after
+            #'my/doom-dashboard-fix-vertical-centering)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
