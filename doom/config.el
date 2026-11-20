@@ -105,6 +105,7 @@
        :timeout 0.25
        "q" 'toggle-input-method))
 
+(setq projectile-enable-caching nil)
 (after! browse-url
   (when (eq system-type 'android)
     (setq browse-url-browser-function #'browse-url-xdg-open)))
